@@ -1,9 +1,10 @@
 '''This module will serve templates to a user
 as well as decide what actions
 should be taken depending on request type.'''
-from flask import Flask, render_template
+from flask import render_template
+from project import create_app
 
-app = Flask(__name__)
+app = create_app()
 
 @app.route('/')
 def home():
