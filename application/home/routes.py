@@ -8,12 +8,12 @@ from . import home_bp
 @home_bp.route('/')
 def home():
     '''Will render the homepage template'''
-    return render_template('index.html')
+    return render_template('index.jinja2')
 
 @home_bp.route('/about')
 def about():
     '''Will render the about page template'''
-    return render_template('about.html')
+    return render_template('about.jinja2')
 
-if __name__ == '__main__':
-    home_bp.run(debug=True)
+# if __name__ == '__main__':
+#     home_bp.run(debug=True)
