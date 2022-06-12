@@ -14,6 +14,3 @@ def home():
 def about():
     '''Will render the about page template'''
     return render_template('about.jinja2')
-
-# if __name__ == '__main__':
-#     home_bp.run(debug=True)
