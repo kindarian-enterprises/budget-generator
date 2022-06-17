@@ -14,3 +14,8 @@ def home():
 def about():
     '''Will render the about page template'''
     return render_template('about.jinja2')
+
+@home_bp.route('/form')
+def form():
+    ''' Will render the form entry page template'''
+    return render_template('form.html')
