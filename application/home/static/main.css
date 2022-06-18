@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: #444;
   /* background-color: #1b2432; */
   background-color: white;
@@ -56,6 +56,7 @@ header h1.logo {
 }
 
 .hMain {
+  padding-top: 20px;
   font-size: 50px;
 }
 
@@ -75,7 +76,7 @@ header h1.logo {
   margin-left: 8%;
   margin-right: 8%;
   border: 1px solid #000;
-  padding-bottom: 50px;
+  padding-bottom: 10px;
 }
 
 .formInpt {
@@ -92,6 +93,7 @@ header h1.logo {
 
 .textInpt {
   width: 57%;
+  margin-bottom: 20px;
 }
 .hForm {
   font-size: 30px;
@@ -107,14 +109,17 @@ header h1.logo {
 .welcomeP {
   padding-left: 25%;
   padding-right: 25%;
-  padding-top: 20px;
+  padding-top: 40px;
   padding-bottom: 10px;
 }
 
 .quickButton {
-  font-size: 30px;
+  border-radius: 15px;
+  margin-top: 20px;
+  padding: 5px;
+  font-size: 25px;
   color: #ffe5d4;
-  background-color: #1b2432;
+  background-color: rgba(49, 121, 216, 0.986);
 }
 
 button.quickButton:hover {
@@ -154,6 +159,7 @@ h3 {
 }
 
 .menu {
+  display: flex;
   float: right;
   margin-top: 0px;
   /* border-radius: 4px;
@@ -169,7 +175,7 @@ h3 {
 }
 
 .menu li a {
-  color: #7d82b8;
+  color: black;
   text-decoration: none;
 }
 
@@ -178,6 +184,7 @@ h3 {
   padding-left: 30px;
   padding-right: 30px;
   margin: 0px;
+  margin-left: auto;
   /* border-radius: 10%; */
   border: 1px solid #000;
 }

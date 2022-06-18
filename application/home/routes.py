@@ -18,4 +18,4 @@ def about():
 @home_bp.route('/form')
 def form():
     ''' Will render the form entry page template'''
-    return render_template('form.html')
+    return render_template('form.jinja2')
