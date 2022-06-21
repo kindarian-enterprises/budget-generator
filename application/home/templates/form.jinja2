@@ -3,7 +3,7 @@
   <h1 class="hForm">Please Enter Your Budget Info</h1>
   <div class="form">
     <h2 class="h2Form">Enter Here</h2>
-    <form class="innerForm">
+    <form action='{{ url_for('home_bp.form') }}' method="post" class="innerForm">
       <div class="myLabel">
       <br />
         <label class="textLabel" for="month">Monthly Income</label><br />
@@ -26,8 +26,8 @@
         <input class="textInpt" type="text" id="spending" name="spending" />
         <input class="textInpt" type="text" id="savingGoal" name="savingGoal" />
       </div>
+      <button type="submit" class="quickButton">Create Budget!</button>
     </form>
   </div>
-  <button type="button" class="quickButton">Create Budget!</button>
 </div>
 {%endblock%}
