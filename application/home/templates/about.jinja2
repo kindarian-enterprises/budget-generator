@@ -4,6 +4,6 @@
   <p class="welcomeP">
     This website allows you to enter in various values about your budget (i.e... monthly bills, amount in savings, savings goals and etc.) and have a nicely organized spreadsheet of a budget plan returned to you. In the background we are taking your data and preforming mathematical calculations to determine the values to return to you  
   </p>
-  <button type="button" class="quickButton">Make Quick Budget!</button>
+  <a href="{{ url_for('home_bp.form') }}"><button class="quickButton">Make Quick Budget!</button></a>
 </div>
 {%endblock%}
