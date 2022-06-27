@@ -25,16 +25,15 @@ def test_form_page():
         response = test_client.get('/form')
         assert response.status_code == 200
 
-# TEST HAS BEEN REMOVED UNTIL REQUEST CAN BE MOCKED
-# def test_post_form_page():
-#     '''Test will eventually have a different page loaded as response...
-#         for now post request will return 405'''
-#     flask_app = create_app()
-#     flask_app.testing = True
+def test_post_form_page():
+    '''Test will eventually have a different page loaded as response...
+        for now post request will return 200'''
+    flask_app = create_app()
+    flask_app.testing = True
 
-#     with flask_app.test_client() as test_client:
-#         response = test_client.post('/form')
-#         assert response.status_code == 405
+    with flask_app.test_client() as test_client:
+        response = test_client.post('/form', data = dict(savingGoal = "7000", savings = "700", month = "300"), follow_redirects = True)
+        assert response.status_code == 200
 
 def test_post_home_page():
     flask_app = create_app()
