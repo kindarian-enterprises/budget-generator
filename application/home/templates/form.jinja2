@@ -1,0 +1,33 @@
+{%extends "head.html"%} {%block content%}
+<div class="welcome">
+  <h1 class="hForm">Please Enter Your Budget Info</h1>
+  <div class="form">
+    <h2 class="h2Form">Enter Here</h2>
+    <form action='{{ url_for('home_bp.form') }}' method="post" class="innerForm">
+      <div class="myLabel">
+      <br />
+        <label class="textLabel" for="month">Monthly Income</label><br />
+        <br />
+        <label class="textLabel" for="monthPay">Monthly Payments</label><br />
+        <br />
+        <label class="textLabel" for="savings">Current Savings</label><br />
+        <br />
+        <label class="textLabel" for="spending">Desired Monthly Spending</label
+        ><br />
+        <br />
+        <label class="textLabel" for="savingGoal">Savings Goal</label><br />
+        <br />
+      </div>
+      <div class="formInpt">
+      <br />
+        <input class="textInpt" type="text" id="month" name="month" />
+        <input class="textInpt" type="text" id="monthPay" name="monthPay" />
+        <input class="textInpt" type="text" id="savings" name="savings" />
+        <input class="textInpt" type="text" id="spending" name="spending" />
+        <input class="textInpt" type="text" id="savingGoal" name="savingGoal" />
+      </div>
+      <button type="submit" class="quickButton">Create Budget!</button>
+    </form>
+  </div>
+</div>
+{%endblock%}
