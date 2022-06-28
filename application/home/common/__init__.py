@@ -4,9 +4,7 @@ def generate_budget(user_data):
     """Takes the user data and does some calculations to reach desired goals set."""
     response = 0
 
-    if check_type(user_data) is False:
-        response = "Please fill out all the categories with numbers"
-    else:
+    if check_type(user_data):
         goal = int(user_data['savingsGoal'])
         curr_saving = int(user_data['currentSaving'])
         pay = int(user_data['income'])
@@ -16,6 +14,8 @@ def generate_budget(user_data):
             while curr_saving < goal:
                 response += 1
                 curr_saving = curr_saving + pay
+    else:
+        response = "Please fill out all the categories with numbers"
     return response
 
 def get_user_data(req):
