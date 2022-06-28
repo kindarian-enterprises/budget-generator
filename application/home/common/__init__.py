@@ -2,9 +2,6 @@
 from application.home.common.check import check_type
 def generate_budget(user_data):
     """Takes the user data and does some calculations to reach desired goals set."""
-    goal = None
-    curr_saving = None
-    pay = None
     response = 0
 
     if check_type(user_data) is False:

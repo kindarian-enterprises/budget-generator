@@ -1,0 +1,8 @@
+{
+  "user_data_good": {
+    "savingsGoal": "7000",
+    "currentSaving": "700",
+    "income": "300"
+  },
+  "user_data_bad": { "savingsGoal": " ", "currentSaving": " ", "income": " " }
+}
