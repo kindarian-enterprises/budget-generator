@@ -24,6 +24,5 @@ def form():
         user_data = get_user_data(request)
         response = generate_budget(user_data)
         # Different template will be rendered with info attained from generate_budget in future
-        print(response)
         template = render_template('head.html')
     return template

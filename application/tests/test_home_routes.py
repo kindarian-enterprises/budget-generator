@@ -1,4 +1,8 @@
+import json
 from application import create_app
+
+with open('application/tests/user_data.json') as file:
+	TEST_DATA = json.load(file)
 
 def test_home_page():
     flask_app = create_app()
@@ -32,7 +36,7 @@ def test_post_form_page():
     flask_app.testing = True
 
     with flask_app.test_client() as test_client:
-        response = test_client.post('/form', data = dict(savingGoal = "7000", savings = "700", month = "300"), follow_redirects = True)
+        response = test_client.post('/form', data = TEST_DATA['user_data_good_post'], follow_redirects = True)
         assert response.status_code == 200
 
 def test_post_home_page():
