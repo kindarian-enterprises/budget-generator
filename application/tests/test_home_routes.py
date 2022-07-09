@@ -36,7 +36,11 @@ def test_post_form_page():
     flask_app.testing = True
 
     with flask_app.test_client() as test_client:
-        response = test_client.post('/form', data = TEST_DATA['user_data_good_post'], follow_redirects = True)
+        response = test_client.post(
+            '/form',
+            data = TEST_DATA['user_data_good_post'],
+            follow_redirects = True
+        )
         assert response.status_code == 200
 
 def test_post_home_page():

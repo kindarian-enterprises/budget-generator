@@ -2,12 +2,29 @@
   "user_data_good": {
     "savingsGoal": "7000",
     "currentSaving": "700",
-    "income": "300"
+    "income": "1200",
+    "monthPay": "600",
+    "spendingMoney": "400"
   },
-  "user_data_bad": { "savingsGoal": " ", "currentSaving": " ", "income": " " },
+  "user_data_bad": {
+    "savingsGoal": " ",
+    "currentSaving": " ",
+    "income": " ",
+    "monthPay": " ",
+    "spendingMoney": " "
+  },
   "user_data_good_post": {
     "savingGoal": "7000",
     "savings": "700",
-    "month": "300"
+    "month": "1200",
+    "monthPay": "600",
+    "spending": "400"
+  },
+  "user_data_invalid_amount": {
+    "savingsGoal": "100",
+    "currentSaving": "35",
+    "income": "10",
+    "monthPay": "10",
+    "spendingMoney": "100"
   }
 }
