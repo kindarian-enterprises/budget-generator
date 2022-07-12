@@ -2,7 +2,7 @@
 as well as decide what actions
 should be taken depending on request type.'''
 from flask import render_template, request
-from application.home.common import generate_budget, get_user_data
+from application.home.common.generate import generate_budget, get_user_data
 from . import home_bp
 
 @home_bp.route('/')

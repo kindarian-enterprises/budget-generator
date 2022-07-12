@@ -14,4 +14,12 @@ def check_type(user_data):
         pay = int(user_data['income'])
     except ValueError:
         confirmation = False
+    try:
+        month_pay = int(user_data['monthPay'])
+    except ValueError:
+        confirmation = False
+    try:
+        spending_money = int(user_data['spendingMoney'])
+    except ValueError:
+        confirmation = False
     return confirmation
