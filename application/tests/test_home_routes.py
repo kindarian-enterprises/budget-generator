@@ -41,7 +41,7 @@ def test_post_form_page():
             data = TEST_DATA['user_data_good_post'],
             follow_redirects = True
         )
-        assert response.status_code == 200
+        assert response.status_code == 405
 
 def test_post_home_page():
     flask_app = create_app()
@@ -59,3 +59,23 @@ def test_post_about_page():
     with flask_app.test_client() as test_client:
         response = test_client.post('/about')
         assert response.status_code == 405
+
+def test_get_display_page():
+    flask_app = create_app()
+    flask_app.testing = True
+
+    with flask_app.test_client() as test_client:
+        response = test_client.get('/display')
+        assert response.status_code == 405
+
+def test_post_display_page():
+    flask_app = create_app()
+    flask_app.testing = True
+
+    with flask_app.test_client() as test_client:
+        response = test_client.post(
+            '/display',
+            data = TEST_DATA['user_data_good_post'],
+            follow_redirects = True
+        )
+        assert response.status_code == 200
