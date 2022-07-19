@@ -53,6 +53,56 @@ header h1.logo {
   font-size: 50px;
 }
 
+.hformDisplay {
+  padding-top: 15px;
+  padding-bottom: 5px;
+  font-size: 25.5pt;
+  margin-bottom: 1px;
+  margin-top: 1px;
+  border-bottom: 1px solid black;
+}
+
+.hDisplay {
+  padding-top: 20px;
+  font-size: 25.5pt;
+}
+
+.displayList {
+  font-size: 18pt;
+  padding-left: 20%;
+  padding-right: 20%;
+  text-align: left;
+}
+
+.displayButton {
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 20px;
+  color: #ffe5d4;
+  background-color: rgba(49, 121, 216, 0.986);
+}
+
+button.displayButton:hover {
+  background-color: #7d82b8;
+}
+
+.displayLabel {
+  padding-bottom: 18%;
+  padding-top: 20%;
+  padding-left: 110px;
+  padding-right: 80px;
+  font-size: 14pt;
+  margin-right: 30px;
+  white-space: nowrap;
+}
+
+.textLabelDisplay {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  font-size: 14pt;
+}
+
 .myLabel {
   float: left;
   padding-left: 100px;
