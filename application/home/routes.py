@@ -3,6 +3,7 @@ as well as decide what actions
 should be taken depending on request type.'''
 from flask import render_template, request
 from application.home.common.generate import generate_budget, get_user_data
+from application.home.common.convert_file import make_pdf
 from . import home_bp
 
 @home_bp.route('/')
@@ -26,5 +27,5 @@ def display():
     user_data = get_user_data(request)
     response = generate_budget(user_data)
     result = {**user_data, **response}
-    template = render_template('display.jinja2', result = result)
+    template = render_template('display.html', result = result)
     return template
