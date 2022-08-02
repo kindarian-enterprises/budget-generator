@@ -5,6 +5,16 @@ import pdfkit
 import shutil
 import os
 
+TEMP_DIR = 'tmp'
+FILE_DIR = 'budget-gen-files'
+TARGET_DIR = os.path.join(TEMP_DIR, FILE_DIR)
+DATE_PATTERN = "%Y%m%d%H%M%S"
+
+
+def make_file_dir():
+    if not os.path.isdir(TARGET_DIR):
+        os.mkdir(TARGET_DIR)
+
 def make_pdf(mydict):
     '''Expect a dictionary of query parameters required to render the budget
         page template'''
@@ -18,23 +28,22 @@ def make_pdf(mydict):
         in order to obtain our HTML for rendering.
 
     """
-    template = render_template('display.html', result = mydict)
-    pdf_location = get_pdf_date()
-    pdfkit.from_string(template, pdf_location)
-    shutil.copy(pdf_location, '/tmp/' + pdf_location)
-    my_pdf = '/tmp/' + pdf_location
+    make_file_dir()
+    html_string = render_template('display.html', result = mydict)
+    pdf_filename = get_pdf_filename()
+    my_pdf = os.path.join(TARGET_DIR, pdf_filename)
+    pdfkit.from_string(html_string, my_pdf)
     return my_pdf
 
 def pdf_cleanup():
     '''Used for periodic removal of generated files'''
-    pdf_location = get_pdf_date()
-    now = datetime.now()
-    if pdf_location[:-4] < datetime.strftime(now, "%m%d%Y%H%M%S") - 600:
-        os.remove('/tmp/' + pdf_location)
-    else:
+    if os.path.isdir(TARGET_DIR):
+        # List the files in TARGET_DIR
+        # Extract the integer timestamp
+        # compare to current integer timestamp (same DATE_PATTERN)- some delta
+        # delete those that fall outside the delta
         pass
 
-def get_pdf_date() {
+def get_pdf_filename():
     now = datetime.now()
-    return datetime.strftime(now, "%m%d%Y%H%M%S") + '.pdf'
-}
+    return f'budget_gen_download_{datetime.strftime(now, DATE_PATTERN)}.pdf'
