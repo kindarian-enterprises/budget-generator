@@ -1,7 +1,7 @@
 '''This module will serve templates to a user
 as well as decide what actions
 should be taken depending on request type.'''
-from flask import render_template, request
+from flask import render_template, request, send_file
 from application.home.common.generate import generate_budget, get_user_data
 from application.home.common.convert_file import make_pdf, pdf_cleanup
 from . import home_bp
@@ -42,5 +42,5 @@ def getpdf():
     pdf_cleanup()
     file_path = make_pdf(query_params) # return this with send_file() https://flask.palletsprojects.com/en/2.2.0/api/?highlight=render_template#flask.send_file
 
-    return render_template('display.html', result = query_params)
+    return send_file(file_path, attachment_filename='your_budget.pdf')
     # TODO: return the file as downloadable

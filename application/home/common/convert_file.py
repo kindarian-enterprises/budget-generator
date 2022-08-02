@@ -7,7 +7,7 @@ import os
 
 TEMP_DIR = 'tmp'
 FILE_DIR = 'budget-gen-files'
-TARGET_DIR = os.path.join(TEMP_DIR, FILE_DIR)
+TARGET_DIR = os.path.join('/',TEMP_DIR, FILE_DIR)
 DATE_PATTERN = "%Y%m%d%H%M%S"
 
 
@@ -29,7 +29,7 @@ def make_pdf(mydict):
 
     """
     make_file_dir()
-    html_string = render_template('display.html', result = mydict)
+    html_string = render_template('get_pdf.html', result = mydict)
     pdf_filename = get_pdf_filename()
     my_pdf = os.path.join(TARGET_DIR, pdf_filename)
     pdfkit.from_string(html_string, my_pdf)
