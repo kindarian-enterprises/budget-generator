@@ -40,7 +40,7 @@ def getpdf():
 
     query_params = request.args.to_dict(flat=True)
     pdf_cleanup()
-    file_path = make_pdf(query_params)
+    file_path = make_pdf(query_params) # return this with send_file() https://flask.palletsprojects.com/en/2.2.0/api/?highlight=render_template#flask.send_file
 
     return render_template('display.html', result = query_params)
     # TODO: return the file as downloadable
