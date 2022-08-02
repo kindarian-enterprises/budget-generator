@@ -39,9 +39,8 @@ def getpdf():
         generate a pdf file and return it as a filestream download.'''
 
     query_params = request.args.to_dict(flat=True)
-
     pdf_cleanup()
     file_path = make_pdf(query_params)
 
-
+    return render_template('display.html', result = query_params)
     # TODO: return the file as downloadable
