@@ -1,9 +1,11 @@
 '''This module converts a html file to pdf'''
+from flask import render_template
+from datetime import datetime
 import pdfkit
 import shutil
 import os
 
-def make_pdf(**kwargs):
+def make_pdf(mydict):
     '''Expect a dictionary of query parameters required to render the budget
         page template'''
 
@@ -16,14 +18,23 @@ def make_pdf(**kwargs):
         in order to obtain our HTML for rendering.
 
     """
-
-    shutil.copy('fake_pdf.pdf', '/tmp/fake_pdf.pdf')
-    my_pdf = '/tmp/fake_pdf.pdf'
+    template = render_template('display.html', result = mydict)
+    pdf_location = get_pdf_date()
+    pdfkit.from_string(template, pdf_location)
+    shutil.copy(pdf_location, '/tmp/' + pdf_location)
+    my_pdf = '/tmp/' + pdf_location
     return my_pdf
 
 def pdf_cleanup():
     '''Used for periodic removal of generated files'''
+    pdf_location = get_pdf_date()
+    now = datetime.now()
+    if pdf_location[:-4] < datetime.strftime(now, "%m%d%Y%H%M%S") - 600:
+        os.remove('/tmp/' + pdf_location)
+    else:
+        pass
 
-    # TODO: Based on configurable timeout, we will  inspect the timestamp of the file,
-    #  perhaps in its naming convention, deleting any that are too old
-    os.remove('/temp/fake_pdf.pdf')
+def get_pdf_date() {
+    now = datetime.now()
+    return datetime.strftime(now, "%m%d%Y%H%M%S") + '.pdf'
+}
