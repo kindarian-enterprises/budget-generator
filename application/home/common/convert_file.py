@@ -1,10 +1,9 @@
 '''This module converts a html file to pdf'''
 import os
 import re
-from flask import render_template
 from datetime import datetime
+from flask import render_template
 import pdfkit
-import shutil
 
 TEMP_DIR = 'tmp'
 FILE_DIR = 'budget-gen-files'
@@ -14,26 +13,24 @@ CSS_FILE = '/home/edison/budgetGen/budget-generator/application/home/static/main
 
 
 def make_file_dir():
+    '''Creates TARGET_DIR if not already made'''
     if not os.path.isdir(TARGET_DIR):
         os.mkdir(TARGET_DIR)
 
-def make_pdf(mydict):
+def make_pdf(budget_info):
     '''Expect a dictionary of query parameters required to render the budget
         page template'''
 
-    """
-
-        Use the key-value pairs, we'll use some permutation of
-            result = {**user_data, **response}
-            template = render_template('display.html', result = result)
-             and some of my_pdf = pdfkit.from_file(page, False)
-        in order to obtain our HTML for rendering.
-
-    """
     make_file_dir()
-    html_string = render_template('get_pdf.html', result = mydict)
+
+    # Create our html with budget info for pdf 
+    html_string = render_template('get_pdf.html', result = budget_info)
+
+    # Create a pdf filename based on the current time
     pdf_filename = get_pdf_filename()
     my_pdf = os.path.join(TARGET_DIR, pdf_filename)
+    
+    # Create pdf and return the location of that pdf as a string
     pdfkit.from_string(html_string, my_pdf, css = CSS_FILE)
     return my_pdf
 
@@ -48,7 +45,7 @@ def pdf_cleanup():
         # Extract the integer timestamp
             match = pattern.search(file)
             my_date = int(match.group())
-            if int(datetime.strftime(datetime.now(), DATE_PATTERN)) - 600 > my_date:
+            if int(datetime.strftime(datetime.now(), DATE_PATTERN)) - 300 > my_date:
                 # compare to current integer timestamp (same DATE_PATTERN)- some delta
                 
                 file_path = os.path.join(TARGET_DIR, file)
@@ -56,5 +53,6 @@ def pdf_cleanup():
                 # delete those that fall outside the delta
 
 def get_pdf_filename():
+    '''Generates a string using the current time'''
     now = datetime.now()
     return f'budget_gen_download_{datetime.strftime(now, DATE_PATTERN)}.pdf'
