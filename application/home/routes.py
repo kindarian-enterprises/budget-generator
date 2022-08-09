@@ -40,7 +40,6 @@ def getpdf():
 
     query_params = request.args.to_dict(flat=True)
     pdf_cleanup()
-    file_path = make_pdf(query_params) # return this with send_file() https://flask.palletsprojects.com/en/2.2.0/api/?highlight=render_template#flask.send_file
+    file_path = make_pdf(query_params)
 
     return send_file(file_path, attachment_filename='your_budget.pdf')
-    # TODO: return the file as downloadable
