@@ -79,3 +79,15 @@ def test_post_display_page():
             follow_redirects = True
         )
         assert response.status_code == 200
+
+def test_get_pdf_page():
+    flask_app = create_app()
+    flask_app.testing = True
+
+    with flask_app.test_client() as test_client:
+        response = test_client.get(
+            '/getpdf',
+            data = TEST_DATA['user_pdf_data'],
+            follow_redirects = True
+        )
+        assert response.status_code == 200

@@ -11,7 +11,7 @@ with open('application/tests/user_data.json') as file:
 
 def test_get_pdf_filename():
     pattern = re.compile(r'budget_gen_download_\d{14}\.pdf')
-    assert pattern.search(get_pdf_filename())    
+    assert pattern.search(get_pdf_filename())
 
 def test_check_type():
     user_data = TEST_DATA["user_data_good"]
