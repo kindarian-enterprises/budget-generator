@@ -4,7 +4,7 @@ import re
 from datetime import datetime
 from flask import render_template
 import pdfkit
-from application.home.common.config import APPCONFIG
+from application.home.common.config import APPCONFIG, CONFIG_FILE
 
 TEMP_DIR = 'tmp'
 FILE_DIR = 'budget-gen-files'
@@ -24,13 +24,12 @@ def make_pdf(budget_info):
 
     make_file_dir()
 
-    # Create our html with budget info for pdf 
+    # Create our html with budget info for pdf
     html_string = render_template('get_pdf.html', result = budget_info)
 
     # Create a pdf filename based on the current time
     pdf_filename = get_pdf_filename()
     my_pdf = os.path.join(TARGET_DIR, pdf_filename)
-    
     # Create pdf and return the location of that pdf as a string
     pdfkit.from_string(html_string, my_pdf, css = CSS_FILE)
     return my_pdf
@@ -49,12 +48,10 @@ def pdf_cleanup():
                 my_date = int(match.groups()[0])
                 if int(datetime.strftime(datetime.now(), DATE_PATTERN)) - 300 > my_date:
                 # compare to current integer timestamp (same DATE_PATTERN)- some delta
-                
+
                     file_path = os.path.join(TARGET_DIR, file)
                     os.remove(file_path)
                     # delete those that fall outside the delta
-            else:
-                continue
 
 def get_pdf_filename():
     '''Generates a string using the current time'''
