@@ -42,4 +42,4 @@ def getpdf():
     pdf_cleanup()
     file_path = make_pdf(query_params)
 
-    return send_file(file_path, attachment_filename='your_budget.pdf')
+    return send_file(file_path, download_name='your_budget.pdf')

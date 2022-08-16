@@ -26,5 +26,11 @@
     "income": "10",
     "monthPay": "10",
     "spendingMoney": "100"
+  },
+  "user_pdf_data": {
+    "goal": "7000",
+    "save": "700",
+    "spend": "1200",
+    "timetogoal": "10"
   }
 }
