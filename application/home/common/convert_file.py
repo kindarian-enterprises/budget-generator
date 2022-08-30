@@ -4,14 +4,13 @@ import re
 from datetime import datetime
 from flask import render_template
 import pdfkit
-from application.home.common.config import APPCONFIG, CONFIG_FILE
+from application.home.common.config import APPCONFIG, STATIC_DIR
 
 TEMP_DIR = 'tmp'
 FILE_DIR = 'budget-gen-files'
 TARGET_DIR = os.path.join('/',TEMP_DIR, FILE_DIR)
 DATE_PATTERN = "%Y%m%d%H%M%S"
-CSS_FILE = '/home/edison/budgetGen/budget-generator/application/home/static/main.css'
-
+CSS_FILE = os.path.join(STATIC_DIR, 'main.css')
 
 def make_file_dir():
     '''Creates TARGET_DIR if not already made'''
