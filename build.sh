@@ -23,6 +23,6 @@ IMAGE_NAME=$DOCKER_USERNAME/budget-generator:$BUILD_TAG
 
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
-docker build -t $IMAGE_NAME .
+docker build -f nginx_uwsgi_dockerfile -t $IMAGE_NAME .
 
 docker push $IMAGE_NAME

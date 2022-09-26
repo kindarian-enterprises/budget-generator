@@ -1,0 +1,26 @@
+name: Pytest
+
+on:
+  # Triggers the workflow on pull requests on master branch
+  pull_request:
+    branches: [ "master" ]
+
+
+  workflow_dispatch:
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get pytest and other requirements
+        run: |
+          sudo apt-get install python3
+          sudo apt-get install wkhtmltopdf
+          pip install -r $GITHUB_WORKSPACE/requirements.txt
+
+      - name: Run pytest
+        run: pytest
