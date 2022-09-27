@@ -1,0 +1,25 @@
+name: Container Deployment
+
+on:
+  pull_request_target:
+    branches:
+      - master
+    types:
+      - closed
+
+    workflow_dispatch:
+
+jobs:
+  is_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      - name: Set environment variables
+        run: |
+          export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
+          export DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}
+          $GITHUB_WORKSPACE/build.sh
