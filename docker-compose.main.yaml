@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  budget-generator-server:
+    container_name: budget-generator
+    image: ${DOCKER_USERNAME}/budget-generator:${TAG}
+    ports:
+      - "80:80"
