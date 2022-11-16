@@ -4,7 +4,6 @@ should be taken depending on request type.'''
 from flask import render_template, request, send_file
 from application.home.common.generate import generate_budget, get_user_data
 from application.home.common.convert_file import make_pdf, pdf_cleanup
-from application.home.common.db_endpoints import create, read, delete
 from . import home_bp
 
 @home_bp.route('/')
@@ -44,21 +43,3 @@ def getpdf():
     file_path = make_pdf(query_params)
 
     return send_file(file_path, download_name='your_budget.pdf')
-
-@home_bp.route('/budgets/<int:budget_id>', methods=['GET', 'DELETE'])
-@home_bp.route('/budgets', methods=['PUT', 'GET'])
-def budgets(budget_id = None):
-    '''Routes requests for budget saving capabilities to the correct handler function.'''
-    budget_result = None
-    if request.method == 'GET' and budget_id is not None:
-        budget_result = read(budget_id)
-    elif request.method == 'GET' and budget_id is None:
-        budget_result = read()
-    
-    if request.method == 'PUT':
-        query_params = request.args.to_dict(flat=True)
-        budget_result = create(query_params)
-    
-    if request.method == 'DELETE' and budget_id is not None:
-        delete(budget_id)
-
