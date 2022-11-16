@@ -1,5 +1,5 @@
 from mongoengine import *
-from config import DB_ROUTE, DATE_PATTERN
+from application.home.common.config import DB_ROUTE, DATE_PATTERN
 import random
 from datetime import datetime
 
@@ -13,18 +13,17 @@ class Budget(Document):
 	dateCreated = dateTimeField()
 	budgetId = IntField(primary_key=True, unique=True)
 
-def read(budget_id = None):
+def readSpecific(budget_id):
 	return_value = []
-	if budget_id is None:
-		for budget in Budget.objects:
+	for budget in Budget.objects:
+		if budget.budgetId == budget_id:
 			return_value.append({"date": budget.dateCreated, "goal": budget.goal, "time": budget.timeUntilGoal, "spending": budget.monthlySpending, "saving": budget.monthlySaving, "id": Budget.budgetId})
-	if budget_id is not None:
-		for budget in Budget.objects:
-			if budget.budgetId == budget_id:
-				return_value.append({"date": budget.dateCreated, "goal": budget.goal, "time": budget.timeUntilGoal, "spending": budget.monthlySpending, "saving": budget.monthlySaving, "id": Budget.budgetId})
 	return return_value
 
-
+def readAll():
+	return_value = []
+	for budget in Budget.objects:
+		return_value.append({"date": budget.dateCreated, "goal": budget.goal, "time": budget.timeUntilGoal, "spending": budget.monthlySpending, "saving": budget.monthlySaving, "id": Budget.budgetId})
 
 def create(queryParams):
 	temp_id = random.randint(1, 50_000) + random.randint(1, 50_000) + random.randint(1, 50_000)
@@ -38,7 +37,7 @@ def create(queryParams):
 	now = datetime.now()
 	budget.dateCreated = datetime.strftime(now, DATE_PATTERN)
 	budget.save()
-	return read(temp_id)
+	return readSpecific(temp_id)
 
 def delete(budget_id):
 	Budget.objects(budgetId=budget_id).delete()
