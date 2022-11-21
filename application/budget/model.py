@@ -1,7 +1,8 @@
-
 from uuid import uuid4
 import os
-from mongoengine import Document, connect, IntField, dateTimeField
+from mongoengine import Document, connect, IntField, dateTimeField, StringField
+from datetime import datetime
+from application.home.common.config import DATE_PATTERN
 
 
 DB_ROUTE = os.environ.get('DB_ROUTE', 'some default db route')
@@ -16,7 +17,16 @@ def get_db_connection(db_route=None):
 
 def query_params_to_budget(request_object):
     #extract budget dict from request query params
-    pass
+    request_dict = request_object.args.to_dict(flat=True)
+    now = datetime.now()
+    result = {
+        "goal":request_dict['savingsGoal'],
+        "timeUntilGoal":request_dict['months'],
+        "monthlySpending":request_dict['spendingMoney'],
+        "monthlySaving":request_dict['toSave'],
+        "dateCreated": datetime.strftime(now, DATE_PATTERN)
+    }
+    return result
 
 class Budget(Document):
     goal = IntField()
@@ -24,7 +34,7 @@ class Budget(Document):
     monthlySpending = IntField()
     monthlySaving = IntField()
     dateCreated = dateTimeField()
-    budgetId = StringField(
+    id = StringField(
         primary_key=True,
         unique=True,
         default=str(uuid4())
