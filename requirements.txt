@@ -16,7 +16,7 @@ py==1.11.0
 pymongo==4.3.2
 pyparsing==3.0.9
 pytest==7.1.2
+pytest-mock==3.10.0
 sentinels==1.0.0
 tomli==2.0.1
-Werkzeug==2.1.2
 zipp==3.8.0

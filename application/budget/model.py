@@ -1,6 +1,6 @@
 from uuid import uuid4
 import os
-from mongoengine import Document, connect, IntField, dateTimeField, StringField
+from mongoengine import Document, connect, IntField, DateTimeField, StringField
 from datetime import datetime
 from application.home.common.config import DATE_PATTERN
 
@@ -18,22 +18,27 @@ def get_db_connection(db_route=None):
 def query_params_to_budget(request_object):
     #extract budget dict from request query params
     request_dict = request_object.args.to_dict(flat=True)
-    now = datetime.now()
-    result = {
-        "goal":request_dict['savingsGoal'],
-        "timeUntilGoal":request_dict['months'],
-        "monthlySpending":request_dict['spendingMoney'],
-        "monthlySaving":request_dict['toSave'],
-        "dateCreated": datetime.strftime(now, DATE_PATTERN)
-    }
-    return result
+    if not request_dict:
+        request_dict = request_object.json()
+    
+    if request_dict:
+        now = datetime.now()
+        result = {
+            "goal":request_dict['savingsGoal'],
+            "timeUntilGoal":request_dict['months'],
+            "monthlySpending":request_dict['spendingMoney'],
+            "monthlySaving":request_dict['toSave'],
+            "dateCreated": datetime.strftime(now, DATE_PATTERN)
+        }
+        return result
+    raise Exception("Request contained no arguments")
 
 class Budget(Document):
     goal = IntField()
     timeUntilGoal = IntField()
     monthlySpending = IntField()
     monthlySaving = IntField()
-    dateCreated = dateTimeField()
+    dateCreated = DateTimeField()
     id = StringField(
         primary_key=True,
         unique=True,

@@ -20,3 +20,5 @@ STATIC_DIR = os.path.join(
 )
 
 DB_ROUTE = 'some.MongoDB'
+
+DATE_PATTERN = "%Y%m%d%H%M%S"
