@@ -22,13 +22,12 @@ def query_params_to_budget(request_object):
         request_dict = request_object.json()
     
     if request_dict:
-        now = datetime.now()
         result = {
             "goal":request_dict['savingsGoal'],
             "timeUntilGoal":request_dict['months'],
             "monthlySpending":request_dict['spendingMoney'],
             "monthlySaving":request_dict['toSave'],
-            "dateCreated": datetime.strftime(now, DATE_PATTERN)
+            # "dateCreated": datetime.strftime(now, DATE_PATTERN)
         }
         return result
     raise Exception("Request contained no arguments")
@@ -38,7 +37,7 @@ class Budget(Document):
     timeUntilGoal = IntField()
     monthlySpending = IntField()
     monthlySaving = IntField()
-    dateCreated = DateTimeField()
+    dateCreated = DateTimeField(default=datetime.utcnow)
     id = StringField(
         primary_key=True,
         unique=True,

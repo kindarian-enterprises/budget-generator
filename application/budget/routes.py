@@ -11,7 +11,7 @@ def budget_no_id():
     '''Routes requests for budget saving capabilities to the correct handler function.'''
     method = request.method.lower()
     result = getattr(controller, f'{method}_budget_no_id')(request)
-    return jsonify(result) #may structure this differently
+    return result #may structure this differently
 
 @budget_bp.route('/<string:budget_id>', methods=['GET', 'DELETE'])
 def budget_with_id():

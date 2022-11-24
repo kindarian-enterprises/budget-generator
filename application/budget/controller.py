@@ -15,7 +15,7 @@ def put_budget_no_id(request_object):
 
     budget_object = Budget(**budget_data).save()
 
-    return budget_object
+    return budget_object.to_json()
 
 def get_budget_with_id(request_object):
     '''Takes a request object and returns a budget with a specific ID.'''
