@@ -14,8 +14,8 @@ def budget_no_id():
     return result #may structure this differently
 
 @budget_bp.route('/<string:budget_id>', methods=['GET', 'DELETE'])
-def budget_with_id():
+def budget_with_id(budget_id):
     #do stuff here
     method = request.method.lower()
-    result = getattr(controller, f'{method}_budget_with_id')(request)
+    result = getattr(controller, f'{method}_budget_with_id')(budget_id)
     return result
