@@ -8,8 +8,17 @@ from application.home.common.config import DATE_PATTERN
 DB_ROUTE = os.environ.get('DB_ROUTE', 'some default db route')
 #OR we could drive this from config file, up to you
 
+QUERY_PARAMETERS_MAP = {
+    "savingsGoal": "goal",
+    "months": "timeUntilGoal",
+    "spendingMoney": "monthlySpending",
+    "toSave": "monthlySaving"
+}
 
 def get_db_connection(db_route=None):
+    """
+    Gets the DB connection
+    """
     #do stuff to get db_route
     return connect(db_route)
     # This don't work this way!
@@ -17,26 +26,24 @@ def get_db_connection(db_route=None):
 
 def query_params_to_budget(request_object):
     #extract budget dict from request query params
+    result = {}
+
     request_dict = request_object.args.to_dict(flat=True)
     if not request_dict:
         request_dict = request_object.json()
-    
+
     if request_dict:
-        result = {
-            "goal":request_dict['savingsGoal'],
-            "timeUntilGoal":request_dict['months'],
-            "monthlySpending":request_dict['spendingMoney'],
-            "monthlySaving":request_dict['toSave'],
-            # "dateCreated": datetime.strftime(now, DATE_PATTERN)
-        }
-        return result
-    raise Exception("Request contained no arguments")
+        for key, val in QUERY_PARAMETERS_MAP.items():
+            if key in request_dict:
+                result[val] = request_dict[key]
+
+    return result
 
 class Budget(Document):
-    goal = IntField()
-    timeUntilGoal = IntField()
-    monthlySpending = IntField()
-    monthlySaving = IntField()
+    goal = IntField(required=True)
+    timeUntilGoal = IntField(required=True)
+    monthlySpending = IntField(required=True)
+    monthlySaving = IntField(required=True)
     dateCreated = DateTimeField(default=datetime.utcnow)
     id = StringField(
         primary_key=True,
