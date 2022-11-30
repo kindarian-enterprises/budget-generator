@@ -8,14 +8,14 @@ def get_budget_no_id(request_object):
     filters = query_params_to_budget(request_object)
     result = Budget.objects(**filters)
 
-    return result
+    return [x.to_json() for x in result]
 
 def put_budget_no_id(request_object):
     '''Creates a new object without a pre-specified ID.'''
     budget_data = query_params_to_budget(request_object)
     budget_object = Budget(**budget_data).save()
 
-    return budget_object
+    return budget_object.to_json()
 
 def get_budget_with_id(budget_id, request_object):
     '''Takes a request object and returns a budget with a specific ID.'''
@@ -23,7 +23,7 @@ def get_budget_with_id(budget_id, request_object):
     filters.update({"id": budget_id})
     results = Budget.objects(**filters)
 
-    return results
+    return [x.to_json() for x in results]
 
 def delete_budget_with_id(budget_id, request_object):
     '''Takes a budget ID and deletes a specific object.'''

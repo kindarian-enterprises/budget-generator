@@ -34,10 +34,10 @@
     "timetogoal": "10"
   },
   "user_db_data_good_post": {
-    "savingsGoal": "7000",
-    "months": "10",
-    "spendingMoney": "400",
-    "toSave": "700"
+    "savingsGoal": 7000,
+    "months": 10,
+    "spendingMoney": 400,
+    "toSave": 700
   },
   "user_db_data_good_post_2": {
     "savingsGoal": "9000",

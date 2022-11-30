@@ -8,6 +8,8 @@ from application.home.common.config import DATE_PATTERN
 DB_ROUTE = os.environ.get('DB_ROUTE', 'some default db route')
 #OR we could drive this from config file, up to you
 
+# request:DB
+# TODO: refactor
 QUERY_PARAMETERS_MAP = {
     "savingsGoal": "goal",
     "months": "timeUntilGoal",
