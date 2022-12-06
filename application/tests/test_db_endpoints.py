@@ -51,14 +51,13 @@ def test_budget_put(mock_get_db_connection):
         for key, val in QUERY_PARAMETERS_MAP.items():
             assert test_data[key] == budget_put[val]
 
-        # # assert route == ''
-        # response_get = test_client.get(
-        # 	create_route_with_id('/budget',budget_put['_id']),
-        # 	follow_redirects=True
-        # )
-        # budget_get = response_get.data
-        #
-        # assert budget_get == budget_put
+        response_get = test_client.get(
+        	create_route_with_id('/budget', budget_put['_id']),
+        	follow_redirects=True
+        )
+        budget_get = json.loads(json.loads(response_get.get_data(['as text']))[0])
+        
+        assert budget_get == budget_put
 
 # def test_budget_get_all(mock_get_db_connection):
 # 	flask_app = create_app()

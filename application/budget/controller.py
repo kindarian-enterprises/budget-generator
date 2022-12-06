@@ -1,6 +1,5 @@
 from application.budget.model import (Budget, query_params_to_budget,
                                       get_db_connection)
-import json
 DB_CONNECTION = get_db_connection()
 
 def get_budget_no_id(request_object):
@@ -19,10 +18,12 @@ def put_budget_no_id(request_object):
 
 def get_budget_with_id(budget_id, request_object):
     '''Takes a request object and returns a budget with a specific ID.'''
-    filters = query_params_to_budget(request_object)
-    filters.update({"id": budget_id})
-    results = Budget.objects(**filters)
-
+    # logging.warning('GOT HERE')
+    # filters = query_params_to_budget(request_object)
+    # logging.warning(f'{filters}')
+    # filters.update({"id": budget_id})
+    # logging.warning(f'{filters}')
+    results = Budget.objects(id=budget_id)
     return [x.to_json() for x in results]
 
 def delete_budget_with_id(budget_id, request_object):
