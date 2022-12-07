@@ -1,8 +1,11 @@
 from application import create_app
 from application.budget.model import Budget, QUERY_PARAMETERS_MAP
+from mongoengine import connect
+from datetime import datetime
 import json
 import pytest
-from mongoengine import connect
+import logging
+
 
 @pytest.fixture()
 def mock_get_db_connection(mocker):
@@ -51,6 +54,7 @@ def test_budget_put(mock_get_db_connection):
         for key, val in QUERY_PARAMETERS_MAP.items():
             assert test_data[key] == budget_put[val]
 
+        logging.warn(f'About to make get request {datetime.now()}')
         response_get = test_client.get(
         	create_route_with_id('/budget', budget_put['_id']),
         	follow_redirects=True
@@ -58,6 +62,35 @@ def test_budget_put(mock_get_db_connection):
         budget_get = json.loads(json.loads(response_get.get_data(['as text']))[0])
         
         assert budget_get == budget_put
+
+def test_update_budget_with_id(mock_get_db_connection):
+    flask_app = create_app()
+    flask_app.testing = True
+    test_data = TEST_DATA['user_db_data_good_post']
+    update_data = TEST_DATA['user_db_data_good_update']
+
+    with flask_app.test_client() as test_client:
+        response_put = test_client.put(
+            create_route_param('/budget', **test_data),
+            follow_redirects=True
+        )
+        budget_put = json.loads(response_put.json)
+        
+        update_data_dict = {QUERY_PARAMETERS_MAP[x]:y for x, y in update_data.items()}
+        assert update_data_dict == None
+        response_update = test_client.post(
+             create_route_param(
+                f"/budget/{budget_put['_id']}",
+                **{QUERY_PARAMETERS_MAP[x]:y for x, y in update_data.items()}
+            ),
+            follow_redirects=True
+        )
+        budget_update = json.loads(response_update.json)
+
+        for key, val in QUERY_PARAMETERS_MAP.items():
+            assert test_data[key] == budget_put[val]
+        
+        assert budget_update == update_data
 
 # def test_budget_get_all(mock_get_db_connection):
 # 	flask_app = create_app()

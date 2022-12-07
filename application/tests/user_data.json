@@ -39,11 +39,11 @@
     "spendingMoney": 400,
     "toSave": 700
   },
-  "user_db_data_good_post_2": {
-    "savingsGoal": "9000",
-    "months": "30",
-    "spendingMoney": "300",
-    "toSave": "600"
+  "user_db_data_good_update": {
+    "savingsGoal": 9000,
+    "months": 30,
+    "spendingMoney": 300,
+    "toSave": 600
   },
   "user_db_data_good_post_3": {
     "savingsGoal": "17000",

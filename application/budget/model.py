@@ -3,6 +3,8 @@ import os
 from mongoengine import Document, connect, IntField, DateTimeField, StringField
 from datetime import datetime
 from application.home.common.config import DATE_PATTERN
+import logging
+from datetime import datetime
 
 DB_ROUTE = os.environ.get('DB_ROUTE', 'some default db route')
 #OR we could drive this from config file, up to you
@@ -27,15 +29,14 @@ def get_db_connection(db_route=None):
 
 def query_params_to_budget(request_object):
     #extract budget dict from request query params
+    logging.warning(f"{request_object} {datetime.now()}")
     result = {}
     request_dict = request_object.args.to_dict(flat=True)
-    if not request_dict:
-        request_dict = request_object.json()
-
     if request_dict:
         for key, val in QUERY_PARAMETERS_MAP.items():
             if key in request_dict:
                 result[val] = request_dict[key]
+    logging.warning(f"{result} {datetime.now()}")
     return result
 
 class Budget(Document):
