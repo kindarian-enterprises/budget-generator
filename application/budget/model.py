@@ -18,6 +18,13 @@ QUERY_PARAMETERS_MAP = {
     "toSave": "monthlySaving"
 }
 
+def front_end_params_to_back_end(parameters):
+    return_value = {}
+    for front, back in QUERY_PARAMETERS_MAP.items():
+        if front in parameters:
+            return_value[f"{back}"] = parameters[f"{front}"]
+    return return_value
+
 def get_db_connection(db_route=None):
     """
     Gets the DB connection
@@ -29,14 +36,10 @@ def get_db_connection(db_route=None):
 
 def query_params_to_budget(request_object):
     #extract budget dict from request query params
-    logging.warning(f"{request_object} {datetime.now()}")
     result = {}
     request_dict = request_object.args.to_dict(flat=True)
     if request_dict:
-        for key, val in QUERY_PARAMETERS_MAP.items():
-            if key in request_dict:
-                result[val] = request_dict[key]
-    logging.warning(f"{result} {datetime.now()}")
+        result = front_end_params_to_back_end(request_dict)
     return result
 
 class Budget(Document):

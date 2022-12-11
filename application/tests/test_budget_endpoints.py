@@ -1,5 +1,5 @@
 from application import create_app
-from application.budget.model import Budget, QUERY_PARAMETERS_MAP
+from application.budget.model import Budget, QUERY_PARAMETERS_MAP, front_end_params_to_back_end
 from mongoengine import connect
 from datetime import datetime
 import json
@@ -37,7 +37,7 @@ with open('application/tests/user_data.json') as file:
 	TEST_DATA = json.load(file)
 
 
-def test_budget_put(mock_get_db_connection):
+def test_budget_put_and_get(mock_get_db_connection):
     '''Testing that I can both put a budget into the
     database and retrieve it using the get budget route.'''
     flask_app = create_app()
@@ -76,12 +76,11 @@ def test_update_budget_with_id(mock_get_db_connection):
         )
         budget_put = json.loads(response_put.json)
         
-        update_data_dict = {QUERY_PARAMETERS_MAP[x]:y for x, y in update_data.items()}
-        assert update_data_dict == None
+        # assert update_data_dict == None
         response_update = test_client.post(
              create_route_param(
                 f"/budget/{budget_put['_id']}",
-                **{QUERY_PARAMETERS_MAP[x]:y for x, y in update_data.items()}
+                **update_data
             ),
             follow_redirects=True
         )
@@ -89,31 +88,25 @@ def test_update_budget_with_id(mock_get_db_connection):
 
         for key, val in QUERY_PARAMETERS_MAP.items():
             assert test_data[key] == budget_put[val]
-        
-        assert budget_update == update_data
+            assert budget_update[val] == update_data[key]
 
-# def test_budget_get_all(mock_get_db_connection):
-# 	flask_app = create_app()
-# 	flask_app.testing = True
-#
-# 	with flask_app.test_client() as test_client:
-# 		test_client.put(
-# 			create_route_param('/budget', **TEST_DATA['user_db_data_good_post']),
-# 			follow_redirects=True
-# 		)
-# 		test_client.put(
-# 			create_route_param('/budget', **TEST_DATA['user_db_data_good_post_2']),
-# 			follow_redirects=True
-# 		)
-# 		returned_budget = test_client.put(
-# 			create_route_param('/budget', **TEST_DATA['user_db_data_good_post_3']),
-# 			follow_redirects=True
-# 		)
-# 		response_get = test_client.get(
-# 			'/budget',
-# 			follow_redirects=True
-# 		)
-# 		returned_budget = json_to_budget(returned_budget.get_data(['as_text']))
-# 		print(response_get.get_data(['as_text']))
-# 		assert returned_budget == {}
-		# assert json_to_budget(response_get.get_data(['as_text'])[1:-1]) == returned_budget
+def test_delete_budget(mock_get_db_connection):
+    flask_app = create_app()
+    flask_app.testing = True
+    test_data = TEST_DATA['user_db_data_good_post']
+    with flask_app.test_client() as test_client:
+        returned_budget = test_client.put(
+            create_route_param('/budget', **test_data),
+            follow_redirects=True
+		)
+        budget_put = json.loads(returned_budget.json)
+		
+        for key, val in QUERY_PARAMETERS_MAP.items():
+            assert test_data[key] == budget_put[val]
+
+        response_del = test_client.delete(
+			f"/budget/{budget_put['_id']}",
+			follow_redirects=True
+		)
+        returned_budget = json.loads(response_del.get_data(['as text']))
+        assert returned_budget == f"Budget {budget_put['_id']} successfully deleted"

@@ -19,7 +19,5 @@ def budget_no_id():
 def budget_with_id(budget_id):
     #do stuff here
     method = request.method.lower()
-    logging.warning(f'{request} {datetime.now()}')
-    logging.warning('about to run get_budget_with_id')
     result = getattr(controller, f'{method}_budget_with_id')(budget_id, request)
     return jsonify(result)
