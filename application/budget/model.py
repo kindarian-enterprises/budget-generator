@@ -3,7 +3,6 @@ import os
 from mongoengine import Document, connect, IntField, DateTimeField, StringField
 from datetime import datetime
 from application.home.common.config import DATE_PATTERN
-import logging
 from datetime import datetime
 
 DB_ROUTE = os.environ.get('DB_ROUTE', 'some default db route')

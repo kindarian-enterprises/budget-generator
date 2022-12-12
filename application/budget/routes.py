@@ -5,7 +5,6 @@ should be taken depending on request type.'''
 import application.budget.controller as controller
 from flask import request, jsonify
 from . import budget_bp
-import logging
 from datetime import datetime
 
 @budget_bp.route('/', methods=['PUT', 'GET'])

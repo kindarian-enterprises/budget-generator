@@ -4,7 +4,6 @@ from mongoengine import connect
 from datetime import datetime
 import json
 import pytest
-import logging
 
 
 @pytest.fixture()
@@ -54,7 +53,6 @@ def test_budget_put_and_get(mock_get_db_connection):
         for key, val in QUERY_PARAMETERS_MAP.items():
             assert test_data[key] == budget_put[val]
 
-        logging.warn(f'About to make get request {datetime.now()}')
         response_get = test_client.get(
         	create_route_with_id('/budget', budget_put['_id']),
         	follow_redirects=True
