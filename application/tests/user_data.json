@@ -32,5 +32,17 @@
     "save": "700",
     "spend": "1200",
     "timetogoal": "10"
+  },
+  "user_db_data_good_post": {
+    "savingsGoal": 7000,
+    "months": 10,
+    "spendingMoney": 400,
+    "toSave": 700
+  },
+  "user_db_data_good_update": {
+    "savingsGoal": 9000,
+    "months": 30,
+    "spendingMoney": 300,
+    "toSave": 600
   }
 }
