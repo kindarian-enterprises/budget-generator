@@ -2,7 +2,23 @@ version: '3'
 
 services:
   budget-generator-server:
+    hostname: budget-generator-server
     container_name: budget-generator
     image: ${DOCKER_USERNAME}/budget-generator:${TAG}
     ports:
       - "80:80"
+    networks:
+      - budget-generator-network
+  budget-generator-mongo:
+    hostname: budget-generator-mongo
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - budget-generator-network
+
+networks:
+  budget-generator-network:
+    driver: bridge
