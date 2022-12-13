@@ -6,16 +6,6 @@ import json
 import pytest
 
 
-@pytest.fixture()
-def mock_get_db_connection(mocker):
-    return mocker.patch(
-		'application.budget.model.get_db_connection',
-		return_value=connect(
-			'mongoenginetest',
-			host='mongomock://localhost'
-			)
-		)
-
 def json_to_budget(jsonString):
     return Budget.from_json(jsonString, created=True)
 
@@ -58,7 +48,7 @@ def test_budget_put_and_get(mock_get_db_connection):
         	follow_redirects=True
         )
         budget_get = json.loads(json.loads(response_get.get_data(['as text']))[0])
-        
+
         assert budget_get == budget_put
 
 def test_update_budget_with_id(mock_get_db_connection):
@@ -73,7 +63,7 @@ def test_update_budget_with_id(mock_get_db_connection):
             follow_redirects=True
         )
         budget_put = json.loads(response_put.json)
-        
+
         # assert update_data_dict == None
         response_update = test_client.post(
              create_route_param(
@@ -98,7 +88,7 @@ def test_delete_budget(mock_get_db_connection):
             follow_redirects=True
 		)
         budget_put = json.loads(returned_budget.json)
-		
+
         for key, val in QUERY_PARAMETERS_MAP.items():
             assert test_data[key] == budget_put[val]
 
