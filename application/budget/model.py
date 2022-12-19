@@ -5,8 +5,6 @@ from datetime import datetime
 from application.home.common.config import DATE_PATTERN
 from datetime import datetime
 
-DB_ROUTE = os.environ.get('DB_ROUTE', 'some default db route')
-#OR we could drive this from config file, up to you
 
 # request:DB
 # TODO: refactor
@@ -24,14 +22,6 @@ def front_end_params_to_back_end(parameters):
             return_value[f"{back}"] = parameters[f"{front}"]
     return return_value
 
-def get_db_connection(db_route=None):
-    """
-    Gets the DB connection
-    """
-    #do stuff to get db_route
-    return connect(db_route)
-    # This don't work this way!
-    # Read https://docs.mongoengine.org/guide/connecting.html#connecting-to-mongodb
 
 def query_params_to_budget(request_object):
     #extract budget dict from request query params

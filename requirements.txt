@@ -8,6 +8,7 @@ itsdangerous==2.1.2
 Jinja2==3.1.2
 MarkupSafe==2.1.1
 mongoengine==0.24.2
+pymongo >=3.10, <4.0
 mongomock==4.1.2
 packaging==21.3
 pdfkit==1.0.0

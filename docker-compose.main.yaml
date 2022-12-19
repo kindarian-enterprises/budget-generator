@@ -5,17 +5,24 @@ services:
     hostname: budget-generator-server
     container_name: budget-generator
     image: ${DOCKER_USERNAME}/budget-generator:${TAG}
+    build:
+      dockerfile: nginx_uwsgi_dockerfile
+      context: .
+    volumes:
+      - .:/budget-generator
     ports:
       - "80:80"
     networks:
       - budget-generator-network
+
   budget-generator-mongo:
     hostname: budget-generator-mongo
+    container_name: budget-generator-mongo
     image: mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: $DBUSER
+      MONGO_INITDB_ROOT_PASSWORD: $DBPASSWORD
     networks:
       - budget-generator-network
 
