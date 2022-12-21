@@ -20,9 +20,17 @@ services:
     container_name: budget-generator-mongo
     image: mongo
     restart: always
+    volumes:
+      - ./scripts:/docker-entrypoint-initdb.d
     environment:
-      MONGO_INITDB_ROOT_USERNAME: $DBUSER
-      MONGO_INITDB_ROOT_PASSWORD: $DBPASSWORD
+      MONGO_INITDB_DATABASE: admin
+      MONGO_INITDB_ROOT_USERNAME: $DBROOTUSER
+      MONGO_INITDB_ROOT_PASSWORD: $DBROOTPASSWORD
+      DBUSER: $DBUSER
+      DBPASSWORD: $DBPASSWORD
+      DBNAME: $DBNAME
+    ports:
+      - "27017:27017"
     networks:
       - budget-generator-network
 

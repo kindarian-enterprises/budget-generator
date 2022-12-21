@@ -1,6 +1,5 @@
 """Initialize Flask app."""
 from flask import Flask
-from application.budget.db import get_db_connection
 
 def create_app():
     """Create Flask application."""

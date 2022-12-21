@@ -2,7 +2,6 @@ from application.budget.model import Budget, query_params_to_budget
 
 from application.budget.db import get_db_connection
 
-get_db_connection()
 
 def get_budget_no_id(request_object):
     '''Gets all budgets'''
