@@ -1,7 +1,5 @@
 from application.budget.model import Budget, query_params_to_budget
-
-from application.budget.db import get_db_connection
-
+import logging
 
 def get_budget_no_id(request_object):
     '''Gets all budgets'''
@@ -13,6 +11,7 @@ def get_budget_no_id(request_object):
 def put_budget_no_id(request_object):
     '''Creates a new object without a pre-specified ID.'''
     budget_data = query_params_to_budget(request_object)
+    print('------DEBUG----- controller.py/put_budget_no_id', budget_data)
     budget_object = Budget(**budget_data).save()
 
     return budget_object.to_json()

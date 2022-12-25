@@ -1,25 +1,27 @@
 from uuid import uuid4
-import os
-from mongoengine import Document, connect, IntField, DateTimeField, StringField
+from mongoengine import Document, IntField, DateTimeField, StringField
 from datetime import datetime
 from application.home.common.config import DATE_PATTERN
-from datetime import datetime
+from bson.objectid import ObjectId
 
 
 # request:DB
 # TODO: refactor
 QUERY_PARAMETERS_MAP = {
-    "savingsGoal": "goal",
-    "months": "timeUntilGoal",
-    "spendingMoney": "monthlySpending",
-    "toSave": "monthlySaving"
+    "savingsGoal": ("goal", int),
+    "months": ("timeUntilGoal", int),
+    "spendingMoney": ("monthlySpending", int),
+    "toSave": ("monthlySaving", int)
 }
+
+def get_object_id():
+    return str(ObjectId())
 
 def front_end_params_to_back_end(parameters):
     return_value = {}
     for front, back in QUERY_PARAMETERS_MAP.items():
         if front in parameters:
-            return_value[f"{back}"] = parameters[f"{front}"]
+            return_value[f"{back[0]}"] = back[1](parameters[f"{front}"])
     return return_value
 
 
@@ -27,8 +29,11 @@ def query_params_to_budget(request_object):
     #extract budget dict from request query params
     result = {}
     request_dict = request_object.args.to_dict(flat=True)
+    request_json = request_object.json
     if request_dict:
         result = front_end_params_to_back_end(request_dict)
+    elif request_json:
+        result = front_end_params_to_back_end(dict(request_json))
     return result
 
 class Budget(Document):
@@ -39,6 +44,5 @@ class Budget(Document):
     dateCreated = DateTimeField(default=datetime.utcnow)
     id = StringField(
         primary_key=True,
-        unique=True,
-        default=str(uuid4())
+        default=get_object_id
     )
