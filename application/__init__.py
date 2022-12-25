@@ -1,6 +1,5 @@
 """Initialize Flask app."""
 from flask import Flask
-from uwsgidecorators import postfork
 from application.budget.db import get_db_connection
 
 def create_app():
@@ -18,7 +17,14 @@ def create_app():
         app.register_blueprint(budget.budget_bp, url_prefix='/budget')
         return app
 
-@postfork
-def connect_after_fork():
-    '''Reconnects to database after server forks.'''
-    get_db_connection()
+IN_UWSGI = True
+try:
+    from uwsgidecorators import postfork
+    @postfork
+    def connect_after_fork():
+        '''Reconnects to database after server forks.'''
+        get_db_connection()
+except:
+    IN_UWSGI = False
+    def connect_after_fork():
+        print("-----connect_after_fork was called outside of UWSGI-----")

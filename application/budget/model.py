@@ -1,4 +1,3 @@
-from uuid import uuid4
 from mongoengine import Document, IntField, DateTimeField, StringField
 from datetime import datetime
 from application.home.common.config import DATE_PATTERN
@@ -29,11 +28,15 @@ def query_params_to_budget(request_object):
     #extract budget dict from request query params
     result = {}
     request_dict = request_object.args.to_dict(flat=True)
-    request_json = request_object.json
     if request_dict:
         result = front_end_params_to_back_end(request_dict)
-    elif request_json:
-        result = front_end_params_to_back_end(dict(request_json))
+    try:
+        request_json = request_object.json
+        if request_json:
+            result = front_end_params_to_back_end(dict(request_json))
+    except:
+        #TODO Add logging for errors
+        print('Could not load any JSON from query_params_to_budget')
     return result
 
 class Budget(Document):

@@ -5,7 +5,6 @@ services:
     hostname: budget-generator-server
     container_name: budget-generator
     image: ${DOCKER_USERNAME}/budget-generator:${TAG}
-    command: python application.wsgi
     build:
       dockerfile: nginx_uwsgi_dockerfile
       context: .
