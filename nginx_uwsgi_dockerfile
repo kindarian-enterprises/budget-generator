@@ -8,5 +8,5 @@ WORKDIR /budget-generator
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC \
-    apt-get install -y python3-pip python3-dev wkhtmltopdf && \
+    apt-get install -y python3-pip python3-dev && \
     pip install -r requirements.txt
