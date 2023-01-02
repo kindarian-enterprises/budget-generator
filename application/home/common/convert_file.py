@@ -3,7 +3,7 @@ import os
 import re
 from datetime import datetime
 from flask import render_template
-import pdfkit
+from weasyprint import HTML, CSS
 from application.home.common.config import APPCONFIG, STATIC_DIR, DATE_PATTERN
 
 TEMP_DIR = 'tmp'
@@ -29,7 +29,8 @@ def make_pdf(budget_info):
     pdf_filename = get_pdf_filename()
     my_pdf = os.path.join(TARGET_DIR, pdf_filename)
     # Create pdf and return the location of that pdf as a string
-    pdfkit.from_string(html_string, my_pdf, css = CSS_FILE)
+    with open(CSS_FILE) as css:
+        HTML(string=html_string).write_pdf(my_pdf, stylesheets=[CSS(string=css.read())])
     return my_pdf
 
 def pdf_cleanup():

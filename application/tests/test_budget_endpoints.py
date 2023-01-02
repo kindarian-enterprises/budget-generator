@@ -9,7 +9,7 @@ import pytest
 def json_to_budget(jsonString):
     return Budget.from_json(jsonString, created=True)
 
-def create_route_param(initialRoute, **params):
+def create_route_with_param(initialRoute, **params):
     if not params:
         return initialRoute
     result = f'{initialRoute}?'
@@ -35,13 +35,13 @@ def test_budget_put_and_get(mock_get_db_connection):
 
     with flask_app.test_client() as test_client:
         response_put = test_client.put(
-            create_route_param('/budget', **test_data),
+            create_route_with_param('/budget', **test_data),
             follow_redirects=True
         )
         budget_put = json.loads(response_put.json)
 
         for key, val in QUERY_PARAMETERS_MAP.items():
-            assert test_data[key] == budget_put[val]
+            assert test_data[key] == val[1](budget_put[val[0]])
 
         response_get = test_client.get(
         	create_route_with_id('/budget', budget_put['_id']),
@@ -59,14 +59,14 @@ def test_update_budget_with_id(mock_get_db_connection):
 
     with flask_app.test_client() as test_client:
         response_put = test_client.put(
-            create_route_param('/budget', **test_data),
+            create_route_with_param('/budget', **test_data),
             follow_redirects=True
         )
         budget_put = json.loads(response_put.json)
 
         # assert update_data_dict == None
         response_update = test_client.post(
-             create_route_param(
+             create_route_with_param(
                 f"/budget/{budget_put['_id']}",
                 **update_data
             ),
@@ -75,8 +75,8 @@ def test_update_budget_with_id(mock_get_db_connection):
         budget_update = json.loads(response_update.json)
 
         for key, val in QUERY_PARAMETERS_MAP.items():
-            assert test_data[key] == budget_put[val]
-            assert budget_update[val] == update_data[key]
+            assert test_data[key] == val[1](budget_put[val[0]])
+            assert budget_update[val[0]] == update_data[key]
 
 def test_delete_budget(mock_get_db_connection):
     flask_app = create_app()
@@ -84,13 +84,13 @@ def test_delete_budget(mock_get_db_connection):
     test_data = TEST_DATA['user_db_data_good_post']
     with flask_app.test_client() as test_client:
         returned_budget = test_client.put(
-            create_route_param('/budget', **test_data),
+            create_route_with_param('/budget', **test_data),
             follow_redirects=True
 		)
         budget_put = json.loads(returned_budget.json)
 
         for key, val in QUERY_PARAMETERS_MAP.items():
-            assert test_data[key] == budget_put[val]
+            assert test_data[key] == val[1](budget_put[val[0]])
 
         response_del = test_client.delete(
 			f"/budget/{budget_put['_id']}",

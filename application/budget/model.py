@@ -1,37 +1,28 @@
-from uuid import uuid4
-import os
-from mongoengine import Document, connect, IntField, DateTimeField, StringField
+from mongoengine import Document, IntField, DateTimeField, StringField
 from datetime import datetime
 from application.home.common.config import DATE_PATTERN
-from datetime import datetime
+from bson.objectid import ObjectId
 
-DB_ROUTE = os.environ.get('DB_ROUTE', 'some default db route')
-#OR we could drive this from config file, up to you
 
 # request:DB
 # TODO: refactor
 QUERY_PARAMETERS_MAP = {
-    "savingsGoal": "goal",
-    "months": "timeUntilGoal",
-    "spendingMoney": "monthlySpending",
-    "toSave": "monthlySaving"
+    "savingsGoal": ("goal", int),
+    "months": ("timeUntilGoal", int),
+    "spendingMoney": ("monthlySpending", int),
+    "toSave": ("monthlySaving", int)
 }
+
+def get_object_id():
+    return str(ObjectId())
 
 def front_end_params_to_back_end(parameters):
     return_value = {}
     for front, back in QUERY_PARAMETERS_MAP.items():
         if front in parameters:
-            return_value[f"{back}"] = parameters[f"{front}"]
+            return_value[f"{back[0]}"] = back[1](parameters[f"{front}"])
     return return_value
 
-def get_db_connection(db_route=None):
-    """
-    Gets the DB connection
-    """
-    #do stuff to get db_route
-    return connect(db_route)
-    # This don't work this way!
-    # Read https://docs.mongoengine.org/guide/connecting.html#connecting-to-mongodb
 
 def query_params_to_budget(request_object):
     #extract budget dict from request query params
@@ -39,6 +30,13 @@ def query_params_to_budget(request_object):
     request_dict = request_object.args.to_dict(flat=True)
     if request_dict:
         result = front_end_params_to_back_end(request_dict)
+    try:
+        request_json = request_object.json
+        if request_json:
+            result = front_end_params_to_back_end(dict(request_json))
+    except:
+        #TODO Add logging for errors
+        print('Could not load any JSON from query_params_to_budget')
     return result
 
 class Budget(Document):
@@ -49,6 +47,5 @@ class Budget(Document):
     dateCreated = DateTimeField(default=datetime.utcnow)
     id = StringField(
         primary_key=True,
-        unique=True,
-        default=str(uuid4())
+        default=get_object_id
     )

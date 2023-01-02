@@ -7,6 +7,7 @@ from flask import request, jsonify
 from . import budget_bp
 from datetime import datetime
 
+
 @budget_bp.route('/', methods=['PUT', 'GET'])
 def budget_no_id():
     '''Routes requests for budget saving capabilities to the correct handler function.'''

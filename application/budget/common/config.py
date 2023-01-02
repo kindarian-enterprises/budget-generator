@@ -18,5 +18,3 @@ STATIC_DIR = os.path.join(
     '..',
     'static'
 )
-
-DB_ROUTE = 'some.MongoDB'
