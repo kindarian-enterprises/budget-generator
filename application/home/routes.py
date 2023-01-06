@@ -43,3 +43,14 @@ def getpdf():
     file_path = make_pdf(query_params)
 
     return send_file(file_path, download_name='your_budget.pdf')
+
+@home_bp.route('/budgets', methods=['PUT', 'GET'])
+def budgets():
+    '''Will save query params as budget to database if method = PUT then
+       render html template for saved budgets page. JS file will take care of
+       rendering and deletion of budgets in list'''
+    if request.method == 'GET':
+        template = render_template('saved_budgets.html')
+    else:
+        pass
+    return template
