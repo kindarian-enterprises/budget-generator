@@ -2,8 +2,8 @@
 from flask import Flask
 from application.budget.db import get_db_connection
 
-def create_app():
-    """Create Flask application."""
+def create_app() -> Flask:
+    """Create and returns a Flask application."""
 
     app = Flask(__name__, instance_relative_config=False)
 
