@@ -2,8 +2,10 @@
 as well as decide what actions
 should be taken depending on request type.'''
 from flask import render_template, request, send_file
+from urllib.request import Request as api_call
 from application.home.common.generate import generate_budget, get_user_data
 from application.home.common.convert_file import make_pdf, pdf_cleanup
+from application.home.common.config import APPCONFIG
 from . import home_bp
 
 @home_bp.route('/')
@@ -51,7 +53,12 @@ def budgets() -> str:
        render html template for saved budgets page. JS file will take care of
        rendering and deletion of budgets in list'''
     if request.method == 'GET':
-        template = render_template('saved_budgets.html')
-    else:
-        pass
-    return template
+        return render_template('saved_budgets.html')
+    query_params = request.args.to_dict(flat=True)
+    try:
+        api_call(f'{APPCONFIG["hostconfig"]["app_url"]}/budget', data=query_params, headers={'Content-Type': 'application/json'}, method='PUT')
+    except:
+        #TODO Add logging for errors
+        print('Could not process request')
+
+    return render_template('saved_budgets.html')
