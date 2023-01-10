@@ -1,5 +1,5 @@
-const APP_URL = process.env("APPURL");
+// const APP_URL = process.env("APPURL");
 
-document.addEventListener("load", function (e) {
+window.addEventListener("load", function (e) {
   console.log("Page loaded!");
 });

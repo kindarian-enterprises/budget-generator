@@ -1,6 +1,6 @@
 """Initialize Flask app."""
 from flask import Flask
-from flask_assets import Environment
+from flask_assets import Environment, Bundle
 from application.budget.db import get_db_connection
 
 def create_app() -> Flask:
@@ -19,9 +19,10 @@ def create_app() -> Flask:
         app.register_blueprint(home.home_bp)
         app.register_blueprint(budget.budget_bp, url_prefix='/budget')
 
-        # Register Assets (For now js_all is just one file but eventually 
+        # Register Assets (For now js_all is just one file but eventually
         #                  there will be multiple bundled files)
-        assets.register("js_all", "home/static/saved_budgets.js")
+        java_script = Bundle('../home/static/saved_budgets.js', output='packed.js')
+        assets.register("js_all", java_script)
         return app
 
 IN_UWSGI = True
