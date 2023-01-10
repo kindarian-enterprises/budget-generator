@@ -12,5 +12,9 @@
     <li>Try adding your first budget to get started!</li>
   </ol>
 </div>
-<script defer src="../js/saved_budgets.js"></script>
-{%endblock%}
+{% assets "js_all" %}
+<script
+  type="text/javascript"
+  src="{{url_for('static', filename='saved_budgets.js')}}"
+></script>
+{% endassets %} {%endblock%}
