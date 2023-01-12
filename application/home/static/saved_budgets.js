@@ -6,21 +6,21 @@ window.addEventListener("load", function (e) {
   fetch("http://127.0.0.1/budget/")
     .then((response) => response.json())
     .then((data) => {
-      if (data.length == 0) {
-        listObject.appendChild(`
+      if (data.length === 0) {
+        listObject.innerHTML = `
         <ul>
         <li>Try adding your first budget to get started!</li>
         </ul>
-    `);
+    `;
       } else {
         data.forEach((budget) => {
-          listObject.appendChild(`
+          let Budget = JSON.parse(budget);
+          listObject.innerHTML = `
         <ul>
-        <li>Try adding your first budget to get started!</li>
+        <li>Your Goal: $${Budget["goal"]}--Months Until Goal: ${Budget["timeUntilGoal"]}--Spending Money: $${Budget["monthlySpending"]}--Money to be Saved: $${Budget["monthlySaving"]}</li>
         </ul>
-    `);
+    `;
         });
       }
-      // data[0].length === 0;
     });
 });
