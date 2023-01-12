@@ -53,7 +53,7 @@ def budgets() -> str:
        render html template for saved budgets page. JS file will take care of
        rendering and deletion of budgets in list'''
     if request.method == 'GET':
-        return render_template('saved_budgets.html')
+        return render_template('saved_budgets.jinja2')
     query_params = request.args.to_dict(flat=True)
     try:
         api_call(f'{APPCONFIG["hostconfig"]["app_url"]}/budget', data=query_params, headers={'Content-Type': 'application/json'}, method='PUT')
@@ -61,4 +61,4 @@ def budgets() -> str:
         #TODO Add logging for errors
         print('Could not process request')
 
-    return render_template('saved_budgets.html')
+    return render_template('saved_budgets.jinja2')
