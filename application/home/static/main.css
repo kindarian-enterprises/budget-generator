@@ -162,6 +162,32 @@ button.displayButton:hover {
   background-color: rgba(49, 121, 216, 0.986);
 }
 
+.budget-list-element {
+  border: 1px solid black;
+  border-bottom: none;
+  padding: 10px;
+  padding-left: 20px;
+  list-style-type: none;
+  /* float: left; */
+  /* text-align: left; */
+}
+
+.budget-list-element-last {
+  border: 1px solid black;
+  padding: 10px;
+  padding-left: 20px;
+  list-style-type: none;
+  /* text-align: left; */
+  /* float: left; */
+}
+
+.saved_budget_list {
+  margin: none;
+  padding-left: 10%;
+  padding-right: 40%;
+  text-align: left;
+}
+
 button.quickButton:hover {
   background-color: #7d82b8;
 }
