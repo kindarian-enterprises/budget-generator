@@ -182,10 +182,14 @@ button.displayButton:hover {
 }
 
 .saved_budget_list {
-  margin: none;
-  padding-left: 10%;
-  padding-right: 40%;
+  margin-right: 30%;
+  padding-left: 0%;
+  padding-right: 0%;
   text-align: left;
+  height: 447px;
+  width: 60%;
+  overflow: auto;
+  overflow-y: auto;
 }
 
 button.quickButton:hover {
