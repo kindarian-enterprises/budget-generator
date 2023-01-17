@@ -1,0 +1,16 @@
+{%extends "head.html"%} {%block content%}
+<div class="welcome">
+  <div style="float: left">
+    <h1>Your Budgets</h1>
+  </div>
+  <div style="float: right">
+    <button class="displayButton">Toggle Filter Type</button>
+  </div>
+</div>
+<div 
+  class="saved_budget_list" 
+  id="saved_budget_list"
+</div>
+{% assets "js_all" %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %} {%endblock%}

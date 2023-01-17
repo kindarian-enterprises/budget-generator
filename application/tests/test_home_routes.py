@@ -91,3 +91,26 @@ def test_get_pdf_page():
             follow_redirects = True
         )
         assert response.status_code == 200
+
+def test_get_saved_budgets_page():
+    flask_app = create_app()
+    flask_app.testing = True
+
+    with flask_app.test_client() as test_client:
+        response = test_client.get(
+            '/budgets',
+            follow_redirects = True
+        )
+        assert response.status_code == 200
+
+def test_put_saved_budgets_page():
+    flask_app = create_app()
+    flask_app.testing = True
+
+    with flask_app.test_client() as test_client:
+        response = test_client.put(
+            '/budgets',
+            data = TEST_DATA['user_db_data_good_update'],
+            follow_redirects = True
+        )
+        assert response.status_code == 200

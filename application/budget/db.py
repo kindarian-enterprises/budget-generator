@@ -3,7 +3,7 @@ from uuid import uuid4
 # from flask_mongoengine import MongoEngine
 from application.budget.common.config import APPCONFIG
 
-def get_db_connection(alias=None):
+def get_db_connection(alias: str=None):
     """
     Gets the DB connection
     """
@@ -16,8 +16,9 @@ def get_db_connection(alias=None):
     return connect(alias=alias, host=db_url)
 
 
-def get_mongo_url():
-    '''Funtion that gets mongo config from file.'''
+def get_mongo_url() -> str:
+    '''Function that gets mongo config from file and returns
+       it as a string.'''
     db_user = APPCONFIG['database_config']['DBUSER']
     db_password = APPCONFIG['database_config']['DBPASSWORD']
     db_name = APPCONFIG['database_config']['DBNAME']

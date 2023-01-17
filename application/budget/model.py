@@ -2,6 +2,7 @@ from mongoengine import Document, IntField, DateTimeField, StringField
 from datetime import datetime
 from application.home.common.config import DATE_PATTERN
 from bson.objectid import ObjectId
+from flask import Request
 
 
 # request:DB
@@ -13,10 +14,13 @@ QUERY_PARAMETERS_MAP = {
     "toSave": ("monthlySaving", int)
 }
 
-def get_object_id():
+def get_object_id() -> str:
+    '''Returns an ObjectId converted to a string.'''
     return str(ObjectId())
 
-def front_end_params_to_back_end(parameters):
+def front_end_params_to_back_end(parameters: dict) -> dict:
+    '''Takes a dictionary from the front end and renames
+       the parameters to work with the backend mongoEngine Document.'''
     return_value = {}
     for front, back in QUERY_PARAMETERS_MAP.items():
         if front in parameters:
@@ -24,8 +28,9 @@ def front_end_params_to_back_end(parameters):
     return return_value
 
 
-def query_params_to_budget(request_object):
-    #extract budget dict from request query params
+def query_params_to_budget(request_object: Request) -> dict:
+    '''Extracts budget dict from request query params. Returns a dictionary
+       of budget-ready query parameters.'''
     result = {}
     request_dict = request_object.args.to_dict(flat=True)
     if request_dict:

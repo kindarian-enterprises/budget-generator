@@ -1,8 +1,11 @@
 """Module is used for handling user input to the budget form."""
+from flask import Request
 
 from application.home.common.check import check_type
-def generate_budget(user_data):
-    """Takes the user data and does some calculations to reach desired goals set."""
+def generate_budget(user_data: dict) -> dict:
+    """Takes the user data in the form of a dictionary
+       and returns a dictionary of values based off of
+       the desired goals set."""
     response = None
     count = 0
 
@@ -20,11 +23,12 @@ def generate_budget(user_data):
                 response = {"months": count, "toSave": pay - (spending_money + month_pay)}
     return response
 
-def get_user_data(req):
-    '''Obtains user data from a request.'''
-    income = req.form.get("month")
-    payments = req.form.get("monthPay")
-    curr_saving = req.form.get("savings")
-    desired_spending = req.form.get("spending")
-    savings_goal = req.form.get("savingGoal")
+def get_user_data(request_object: Request) -> dict:
+    '''Obtains user data from a request_object and returns
+       a dictionary of the request data.'''
+    income = request_object.form.get("month")
+    payments = request_object.form.get("monthPay")
+    curr_saving = request_object.form.get("savings")
+    desired_spending = request_object.form.get("spending")
+    savings_goal = request_object.form.get("savingGoal")
     return {"income":income, "monthPay":payments, "currentSaving":curr_saving, "spendingMoney":desired_spending, "savingsGoal":savings_goal}

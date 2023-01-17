@@ -11,14 +11,15 @@ FILE_DIR = 'budget-gen-files'
 TARGET_DIR = os.path.join('/',TEMP_DIR, FILE_DIR)
 CSS_FILE = os.path.join(STATIC_DIR, 'main.css')
 
-def make_file_dir():
-    '''Creates TARGET_DIR if not already made'''
+def make_file_dir() -> None:
+    '''Creates TARGET_DIR if not already made.
+       Returns nothing.'''
     if not os.path.isdir(TARGET_DIR):
         os.mkdir(TARGET_DIR)
 
-def make_pdf(budget_info):
-    '''Expect a dictionary of query parameters required to render the budget
-        page template'''
+def make_pdf(budget_info: dict) -> str:
+    '''Expects a dictionary of query parameters required to render the budget
+        page template. Returns a string filepath to the created PDF'''
 
     make_file_dir()
 
@@ -33,7 +34,7 @@ def make_pdf(budget_info):
         HTML(string=html_string).write_pdf(my_pdf, stylesheets=[CSS(string=css.read())])
     return my_pdf
 
-def pdf_cleanup():
+def pdf_cleanup() -> None:
     '''Used for periodic removal of generated files'''
     if os.path.isdir(TARGET_DIR):
         pattern = re.compile(APPCONFIG['filename']['file_pattern'])
@@ -52,7 +53,8 @@ def pdf_cleanup():
                     os.remove(file_path)
                     # delete those that fall outside the delta
 
-def get_pdf_filename():
-    '''Generates a string using the current time'''
+def get_pdf_filename() -> str:
+    '''Generates and returns a string for
+       pdf filename using the current time'''
     now = datetime.now()
     return f'budget_gen_download_{datetime.strftime(now, DATE_PATTERN)}.pdf'
