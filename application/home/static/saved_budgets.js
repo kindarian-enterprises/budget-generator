@@ -1,5 +1,3 @@
-// const APP_URL = process.env("APPURL");
-
 const listObject = document.getElementById("saved_budget_list");
 window.addEventListener("load", function (e) {
   fetch("http://127.0.0.1/budget/")

@@ -2,7 +2,7 @@
 as well as decide what actions
 should be taken depending on request type.'''
 from flask import render_template, request, send_file
-from urllib.request import Request as api_call
+from urllib.request import Request
 from application.home.common.generate import generate_budget, get_user_data
 from application.home.common.convert_file import make_pdf, pdf_cleanup
 from application.home.common.config import APPCONFIG
@@ -56,7 +56,12 @@ def budgets() -> str:
         return render_template('saved_budgets.jinja2')
     query_params = request.args.to_dict(flat=True)
     try:
-        api_call(f'{APPCONFIG["hostconfig"]["app_url"]}/budget', data=query_params, headers={'Content-Type': 'application/json'}, method='PUT')
+        Request(
+        f'{APPCONFIG["hostconfig"]["app_url"]}/budget',
+        data=query_params,
+        headers={'Content-Type': 'application/json'},
+        method='PUT'
+        )
     except:
         #TODO Add logging for errors
         print('Could not process request')

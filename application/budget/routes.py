@@ -10,7 +10,7 @@ from . import budget_bp
 @budget_bp.route('/', methods=['PUT', 'GET'])
 def budget_no_id() -> str:
     '''Routes requests for budget saving capabilities to the correct handler function.
-       Returns a jsonified list or budet depending on request'''
+       Returns a jsonified list or budget depending on request'''
     @after_this_request
     def allow_cors_access(response):
         response.headers.add('Access-Control-Allow-Origin', '*')

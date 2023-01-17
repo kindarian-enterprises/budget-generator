@@ -17,7 +17,7 @@ def get_db_connection(alias: str=None):
 
 
 def get_mongo_url() -> str:
-    '''Funtion that gets mongo config from file and returns
+    '''Function that gets mongo config from file and returns
        it as a string.'''
     db_user = APPCONFIG['database_config']['DBUSER']
     db_password = APPCONFIG['database_config']['DBPASSWORD']
