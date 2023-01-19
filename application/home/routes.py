@@ -2,7 +2,7 @@
 as well as decide what actions
 should be taken depending on request type.'''
 from flask import render_template, request, send_file
-from urllib.request import Request
+import requests
 from application.home.common.generate import generate_budget, get_user_data
 from application.home.common.convert_file import make_pdf, pdf_cleanup
 from application.home.common.config import APPCONFIG
@@ -47,7 +47,7 @@ def getpdf():
 
     return send_file(file_path, download_name='your_budget.pdf')
 
-@home_bp.route('/budgets', methods=['PUT', 'GET'])
+@home_bp.route('/budgets', methods=['POST', 'GET'])
 def budgets() -> str:
     '''Will save query params as budget to database if method = PUT then
        render html template for saved budgets page. JS file will take care of
@@ -56,11 +56,10 @@ def budgets() -> str:
         return render_template('saved_budgets.jinja2')
     query_params = request.args.to_dict(flat=True)
     try:
-        Request(
+        print(query_params)
+        requests.put(
         f'{APPCONFIG["hostconfig"]["app_url"]}/budget',
-        data=query_params,
-        headers={'Content-Type': 'application/json'},
-        method='PUT'
+        params=query_params
         )
     except:
         #TODO Add logging for errors
