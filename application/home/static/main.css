@@ -29,6 +29,10 @@ header h1.logo {
   float: left;
 }
 
+a {
+  text-decoration: none;
+}
+
 /*
  * Center the body content
  */

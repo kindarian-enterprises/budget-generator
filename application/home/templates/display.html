@@ -20,15 +20,13 @@
       href="{{ url_for('home_bp.getpdf', save=result['toSave'], spend=result['spendingMoney'], timetogoal=result['months'], goal=result['savingsGoal']) }}"
       ><button class="displayButton">Download File</button>
     </a>
-    <form
-      action="{{ url_for('home_bp.budgets', toSave=result['toSave'], spendingMoney=result['spendingMoney'], months=result['months'], savingsGoal=result['savingsGoal']) }}"
-      method="POST"
+    <button
+      style="margin-left: 5px"
+      id="save-budget-button"
+      class="displayButton"
     >
-      <input type="hidden" name="param1" value="val" />
-      <a href="#" onclick="this.parentNode.submit()"
-        ><button class="displayButton">Save Budget</button></a
-      >
-    </form>
+      Save Budget
+    </button>
     <!-- <a
       href="{{ url_for('home_bp.budgets', toSave=result['toSave'], spendingMoney=result['spendingMoney'], months=result['months'], savingsGoal=result['savingsGoal']) }}"
       ><button class="displayButton">Save Budget</button>
@@ -77,4 +75,6 @@
     </form>
   </div>
 </div>
-{%endblock%}
+{% assets "js_display" %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %} {%endblock%}

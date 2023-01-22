@@ -21,8 +21,17 @@ def create_app() -> Flask:
 
         # Register Assets (For now js_all is just one file but eventually
         #                  there will be multiple bundled files)
-        java_script = Bundle('../home/static/saved_budgets.js', output='packed.js')
-        assets.register("js_all", java_script)
+        js_saved_budgets = Bundle(
+            '../home/static/saved_budgets.js',
+            output='packed.js'
+            )
+        
+        js_display = Bundle(
+            '../home/static/display.js',
+            output='saved.js'
+        )
+        assets.register("js_saved_budgets", js_saved_budgets)
+        assets.register("js_display", js_display)
         return app
 
 IN_UWSGI = True
