@@ -53,3 +53,8 @@ def budgets() -> str:
        JS file will take care of
        rendering and deletion of budgets in list'''
     return render_template('saved_budgets.jinja2')
+
+@home_bp.route('/dashboard', methods=['GET'])
+def dashboard() -> str:
+    '''Will render the template for the dashboard page'''
+    return render_template('dashboard.jinja2')
