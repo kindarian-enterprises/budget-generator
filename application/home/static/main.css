@@ -263,3 +263,11 @@ h3 {
   color: #a1cca5;
   text-decoration: none;
 }
+
+.dashboard-container {
+  margin-top: 100px;
+}
+
+.saved-budgets-preview {
+  padding-top: 100px;
+}
