@@ -47,8 +47,8 @@ def getpdf():
 
     return send_file(file_path, download_name='your_budget.pdf')
 
-@home_bp.route('/budgets', methods=['GET'])
-def budgets() -> str:
+@home_bp.route('/saved-budgets', methods=['GET'])
+def saved_budgets() -> str:
     '''Will render html template for saved budgets page.
        JS file will take care of
        rendering and deletion of budgets in list'''

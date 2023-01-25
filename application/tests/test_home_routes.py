@@ -98,7 +98,7 @@ def test_get_saved_budgets_page():
 
     with flask_app.test_client() as test_client:
         response = test_client.get(
-            '/budgets',
+            '/saved-budgets',
             follow_redirects = True
         )
         assert response.status_code == 200
