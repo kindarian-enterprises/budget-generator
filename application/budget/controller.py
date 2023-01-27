@@ -42,3 +42,36 @@ def post_budget_with_id(budget_id: str, request_object: Request) -> str:
     budget.modify(**update)
     budget.save()
     return budget.to_json()
+
+def get_budgets_page(page_size, page_number, filters = None):
+    '''Takes filters to search on, and a page size / page number
+       then returns a "page" of documents matching the filters.'''
+    offset = None
+    if filters is None:
+        filters = {}
+    if page_number == 1:
+        offset = 0
+    else:
+        offset = (page_size * page_number) - page_size
+   # TODO: Create working aggregation pipeline
+
+    pipeline = []
+   #    {"$match":filters},
+   #    {"$sort": {"dateCreated": -1}},
+   #    {
+   #       "$group": {
+   #          "_id": { "$dateToString": {"date": "$dateCreated", "format": "%G-%m-%d"}},
+   #          "goal": { "$top": {"goal": "$goal"} }
+   #       }
+   #    }
+   #  ]
+    query_result = Budget.objects().aggregate(pipeline)
+
+    result_size = len(list(query_result))
+
+    if result_size == 0:
+        budgets_out = []
+    else:
+        budgets_out = list(query_result)
+
+    return budgets_out
