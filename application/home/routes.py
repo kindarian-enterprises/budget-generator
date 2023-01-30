@@ -60,5 +60,5 @@ def dashboard() -> str:
     five_most_recent_budgets = get_budgets_page(5, 1)
     return render_template(
         'dashboard.jinja2',
-        # data=five_most_recent_budgets
+        data=five_most_recent_budgets
         )

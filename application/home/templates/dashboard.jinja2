@@ -4,9 +4,8 @@
 	<div class="dashboard-container">
 		<div 
 			style="
-				width: 200px;
 				float: left;
-				margin-left: 150px;
+				margin-left: 10px;
 			"
 			>
 			<label>Recent Budgets</label>
@@ -20,7 +19,7 @@
 			style="
 				width: 225px;
 				float: left;
-				margin-left: 125px;
+				margin-left: 100px;
 				margin-right: 50px;
 				padding-top: 100px;"
 			>
@@ -29,13 +28,17 @@
 		</div>
 		<div
 			style="
-				width: 350px;
+				width: 310px;
 				float: right;
-				margin-right: 50px;
+				margin-right: 25px;
 				text-align: left;"
 			>
 			<p>Welcome to your dashboard! Here you are able to view previous budgets at a glance, create a new budget, or view all of your budgets from the saved budgets page! Our high tech systems calculate your budget precisely based on the needs of the individual. We pride ourselves on being the best free budget generator on the net! all you need to do is input a handful of values about your current budget status and we will do the rest for you! Now you can finally rest easy knowing that your budget is in safe hands, possibly the safest hands it has ever been in!</p>
 		</div>
 	</div>
 </div>
+{% assets "js_dashboard" %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+<script type="text/javascript">displayRecentBudgets({{data}})</script>
 {%endblock%}

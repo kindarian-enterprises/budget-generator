@@ -172,8 +172,6 @@ button.displayButton:hover {
   padding: 10px;
   padding-left: 20px;
   list-style-type: none;
-  /* float: left; */
-  /* text-align: left; */
 }
 
 .budget-list-element-last {
@@ -181,8 +179,11 @@ button.displayButton:hover {
   padding: 10px;
   padding-left: 20px;
   list-style-type: none;
-  /* text-align: left; */
-  /* float: left; */
+}
+
+.preview-list-element {
+  list-style-type: none;
+  padding: 10px;
 }
 
 .saved_budget_list {
@@ -269,5 +270,5 @@ h3 {
 }
 
 .saved-budgets-preview {
-  padding-top: 100px;
+  padding-top: 80px;
 }

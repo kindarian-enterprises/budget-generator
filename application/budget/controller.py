@@ -1,5 +1,6 @@
-from application.budget.model import Budget, query_params_to_budget
 from flask import Request
+from application.budget.model import Budget, query_params_to_budget
+from application.budget.common.config import make_mongo_pipeline
 
 def get_budget_no_id(request_object: Request) -> list:
     '''Gets all budgets and returns them in the form of
@@ -53,25 +54,10 @@ def get_budgets_page(page_size, page_number, filters = None):
         offset = 0
     else:
         offset = (page_size * page_number) - page_size
-   # TODO: Create working aggregation pipeline
 
-    pipeline = []
-   #    {"$match":filters},
-   #    {"$sort": {"dateCreated": -1}},
-   #    {
-   #       "$group": {
-   #          "_id": { "$dateToString": {"date": "$dateCreated", "format": "%G-%m-%d"}},
-   #          "goal": { "$top": {"goal": "$goal"} }
-   #       }
-   #    }
-   #  ]
+    pipeline = make_mongo_pipeline(offset, page_size, filters)
+
     query_result = Budget.objects().aggregate(pipeline)
 
-    result_size = len(list(query_result))
-
-    if result_size == 0:
-        budgets_out = []
-    else:
-        budgets_out = list(query_result)
-
-    return budgets_out
+    result = list(query_result)
+    return result
