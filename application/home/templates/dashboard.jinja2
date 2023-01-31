@@ -23,8 +23,9 @@
 				margin-right: 50px;
 				padding-top: 100px;"
 			>
-			<button style="width: 190px; margin-bottom: 50px;" class="displayButton">Make budget now</button>
-			<button style="width: 190px;" class="displayButton">View all budgets</button>
+			<a href="{{ url_for('home_bp.form') }}"><button style="width: 190px; margin-bottom: 50px;" class="displayButton">Make budget now</button>
+ 			</a>
+			<a href="{{ url_for('home_bp.saved_budgets') }}"><button style="width: 190px;" class="displayButton">View all budgets</button></a>
 		</div>
 		<div
 			style="

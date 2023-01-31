@@ -17,7 +17,7 @@ function displayRecentBudgets(budgets) {
 `;
   } else {
     const uListEl = document.createElement("ul");
-    formated_budgets.forEach((budget, i, arr) => {
+    formated_budgets.forEach((budget) => {
       const listEl = this.document.createElement("li");
 
       const textNode1 = document.createTextNode(`Your Goal: ${budget[1]}   `);
