@@ -1,6 +1,6 @@
 from flask import Request
 from application.budget.model import Budget, query_params_to_budget
-from application.budget.common.config import make_mongo_pipeline
+from application.budget.common.pipelines import make_pagination_pipeline
 
 def get_budget_no_id(request_object: Request) -> list:
     '''Gets all budgets and returns them in the form of
@@ -55,7 +55,7 @@ def get_budgets_page(page_size, page_number, filters = None):
     else:
         offset = (page_size * page_number) - page_size
 
-    pipeline = make_mongo_pipeline(offset, page_size, filters)
+    pipeline = make_pagination_pipeline(offset, page_size, filters)
 
     query_result = Budget.objects().aggregate(pipeline)
 
