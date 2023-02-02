@@ -1,5 +1,6 @@
-from application.budget.model import Budget, query_params_to_budget
 from flask import Request
+from application.budget.model import Budget, query_params_to_budget
+from application.budget.common.pipelines import make_pagination_pipeline
 
 def get_budget_no_id(request_object: Request) -> list:
     '''Gets all budgets and returns them in the form of
@@ -42,3 +43,21 @@ def post_budget_with_id(budget_id: str, request_object: Request) -> str:
     budget.modify(**update)
     budget.save()
     return budget.to_json()
+
+def get_budgets_page(page_size, page_number, filters = None):
+    '''Takes filters to search on, and a page size / page number
+       then returns a "page" of documents matching the filters.'''
+    offset = None
+    if filters is None:
+        filters = {}
+    if page_number == 1:
+        offset = 0
+    else:
+        offset = (page_size * page_number) - page_size
+
+    pipeline = make_pagination_pipeline(offset, page_size, filters)
+
+    query_result = Budget.objects().aggregate(pipeline)
+
+    result = list(query_result)
+    return result

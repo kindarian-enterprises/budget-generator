@@ -30,7 +30,7 @@ saveBudgetbutton.addEventListener("click", (e) => {
   putToDatabase("/budget", requestData)
     .then((response) => {
       if (response.status === 200) {
-        window.location.href = `http://localhost/budgets`;
+        window.location.href = `http://localhost/saved-budgets`;
       } else {
         throw new Error("connection failed");
       }

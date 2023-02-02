@@ -2,11 +2,11 @@
 as well as decide what actions
 should be taken depending on request type.'''
 from flask import render_template, request, send_file
-import requests
 from application.home.common.generate import generate_budget, get_user_data
 from application.home.common.convert_file import make_pdf, pdf_cleanup
 from application.home.common.config import APPCONFIG
 from . import home_bp
+from application.budget.controller import get_budgets_page
 
 @home_bp.route('/')
 def home() -> str:
@@ -47,9 +47,18 @@ def getpdf():
 
     return send_file(file_path, download_name='your_budget.pdf')
 
-@home_bp.route('/budgets', methods=['GET'])
-def budgets() -> str:
+@home_bp.route('/saved-budgets', methods=['GET'])
+def saved_budgets() -> str:
     '''Will render html template for saved budgets page.
        JS file will take care of
        rendering and deletion of budgets in list'''
     return render_template('saved_budgets.jinja2')
+
+@home_bp.route('/dashboard', methods=['GET'])
+def dashboard() -> str:
+    '''Will render the template for the dashboard page'''
+    five_most_recent_budgets = get_budgets_page(5, 1)
+    return render_template(
+        'dashboard.jinja2',
+        data=five_most_recent_budgets
+        )

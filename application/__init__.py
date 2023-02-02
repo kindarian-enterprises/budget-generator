@@ -30,8 +30,13 @@ def create_app() -> Flask:
             '../home/static/display.js',
             output='saved.js'
         )
+        js_dashboard = Bundle(
+            '../home/static/dashboard.js',
+            output='dash.js'
+        )
         assets.register("js_saved_budgets", js_saved_budgets)
         assets.register("js_display", js_display)
+        assets.register("js_dashboard", js_dashboard)
         return app
 
 IN_UWSGI = True
