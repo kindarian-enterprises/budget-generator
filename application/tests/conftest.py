@@ -1,6 +1,6 @@
 import pytest
 from mongoengine import connect
-
+from datetime import datetime
 
 @pytest.fixture()
 def mock_get_db_connection(mocker):
@@ -12,7 +12,7 @@ def mock_get_db_connection(mocker):
         )
     )
 
-RAW_TEST_HTML = ['''<!DOCTYPE html>
+HOME_PAGE_TEST_DATA = '''<!DOCTYPE html>
 <html>
   <head>
     <title>Budget Generator</title>
@@ -58,8 +58,9 @@ RAW_TEST_HTML = ['''<!DOCTYPE html>
 </div>
 </div>
   </body>
-</html>''', # HOME PAGE
-'''<!DOCTYPE html>
+</html>'''
+
+ABOUT_PAGE_TEST_DATA = '''<!DOCTYPE html>
 <html>
   <head>
     <title>Budget Generator</title>
@@ -102,8 +103,9 @@ RAW_TEST_HTML = ['''<!DOCTYPE html>
 </div>
 </div>
   </body>
-</html>''', # ABOUT PAGE
-'''<!DOCTYPE html>
+</html>'''
+
+FORM_PAGE_TEST_DATA = '''<!DOCTYPE html>
 <html>
   <head>
     <title>Budget Generator</title>
@@ -170,8 +172,9 @@ RAW_TEST_HTML = ['''<!DOCTYPE html>
 </div>
 </div>
   </body>
-</html>''', # FORM PAGE
-'''<!DOCTYPE html>
+</html>'''
+
+DISPLAY_PAGE_TEST_DATA = '''<!DOCTYPE html>
 <html>
   <head>
     <title>Budget Generator</title>
@@ -281,8 +284,9 @@ RAW_TEST_HTML = ['''<!DOCTYPE html>
 <script type="text/javascript" src="/static/saved.js?4c0ac62a"></script>
  </div>
   </body>
-</html>''', # DISPLAY PAGE
-'''<!DOCTYPE html>
+</html>'''
+
+SAVED_BUDGETS_PAGE_TEST_DATA = '''<!DOCTYPE html>
 <html>
   <head>
     <title>Budget Generator</title>
@@ -332,8 +336,14 @@ RAW_TEST_HTML = ['''<!DOCTYPE html>
 <script type="text/javascript" src="/static/packed.js?f7d077a6"></script>
  </div>
   </body>
-</html>''', # SAVED BUDGETS PAGE
-'''<!DOCTYPE html>
+</html>'''
+
+DASHBOARD_BUDGET_INPUT_DATA = [
+{'goal': 9000, 'date': datetime.strftime(datetime.now(), '%Y-%m-%d')},
+{'goal': 7000, 'date': datetime.strftime(datetime.now(), '%Y-%m-%d')}
+]
+
+DASHBOARD_PAGE_TEST_DATA = f'''<!DOCTYPE html>
 <html>
   <head>
     <title>Budget Generator</title>
@@ -409,8 +419,7 @@ RAW_TEST_HTML = ['''<!DOCTYPE html>
 
 <script type="text/javascript" src="/static/dash.js?fffa6eb3"></script>
 
-<script type="text/javascript">displayRecentBudgets([{'goal': 9000, 'date': '2023-02-08'}, {'goal': 7000, 'date': '2023-02-08'}])</script>
+<script type="text/javascript">displayRecentBudgets({DASHBOARD_BUDGET_INPUT_DATA})</script>
 </div>
   </body>
-</html>''' # DASHBOARD PAGE
-]
+</html>'''
