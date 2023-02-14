@@ -20,7 +20,6 @@ jobs:
       - name: Get pytest and other requirements
         run: |
           sudo apt-get install python3
-          sudo apt-get install wkhtmltopdf
           pip install -r $GITHUB_WORKSPACE/requirements.txt
 
       - name: Run pytest
