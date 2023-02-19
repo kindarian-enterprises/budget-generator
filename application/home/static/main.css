@@ -38,7 +38,7 @@ a {
  */
 
 .container {
-  width: 1200px;
+  width: 80%;
   margin: 0 auto;
 }
 
@@ -109,8 +109,8 @@ button.displayButton:hover {
 
 .myLabel {
   float: left;
-  padding-left: 100px;
-  padding-right: 100px;
+  padding-left: 10%;
+  padding-right: 10%;
   border-right: 1px solid black;
 }
 
@@ -267,6 +267,8 @@ h3 {
 
 .dashboard-container {
   margin-top: 100px;
+  margin-left: 5%;
+  display: flex;
 }
 
 .saved-budgets-preview {
