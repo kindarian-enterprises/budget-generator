@@ -273,4 +273,7 @@ h3 {
 
 .saved-budgets-preview {
   padding-top: 80px;
+  min-width: 100%;
+  /* max-width: 70%; */
+  width: fit-content;
 }
