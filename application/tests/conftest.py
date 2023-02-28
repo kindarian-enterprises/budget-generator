@@ -384,6 +384,7 @@ DASHBOARD_PAGE_TEST_DATA = f'''<!DOCTYPE html>
 			style="
 				float: left;
 				margin-left: 10px;
+				width: fit-content;
 			"
 			>
 			<label>Recent Budgets</label>
