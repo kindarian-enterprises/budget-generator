@@ -384,6 +384,7 @@ DASHBOARD_PAGE_TEST_DATA = f'''<!DOCTYPE html>
 			style="
 				float: left;
 				margin-left: 10px;
+				width: fit-content;
 			"
 			>
 			<label>Recent Budgets</label>
@@ -408,6 +409,7 @@ DASHBOARD_PAGE_TEST_DATA = f'''<!DOCTYPE html>
 		<div
 			style="
 				width: 310px;
+				min-width: 200px;
 				float: right;
 				margin-right: 25px;
 				text-align: left;"
