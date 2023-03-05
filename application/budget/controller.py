@@ -1,5 +1,7 @@
 from flask import Request
-from application.budget.model import Budget, query_params_to_budget
+from voluptuous import MultipleInvalid
+from application.budget.model import Budget, query_params_to_budget, BUDGET_DATA_SCHEMA
+from application.budget.common.exceptions import FailedSchemaException
 from application.budget.common.pipelines import make_pagination_pipeline
 
 def get_budget_no_id(request_object: Request) -> list:
@@ -14,6 +16,10 @@ def put_budget_no_id(request_object: Request) -> str:
     '''Creates a new object without a pre-specified ID.
        and returns a JSON string of that budget.'''
     budget_data = query_params_to_budget(request_object)
+    try:
+        BUDGET_DATA_SCHEMA(budget_data)
+    except MultipleInvalid:
+        raise FailedSchemaException("Budget data did not conform to schema")
     budget_object = Budget(**budget_data).save()
 
     return budget_object.to_json()

@@ -1,7 +1,6 @@
 from mongoengine import Document, IntField, DateTimeField, StringField
 from voluptuous import Schema, All, Range, Required
 from datetime import datetime
-from application.home.common.config import DATE_PATTERN
 from bson.objectid import ObjectId
 from flask import Request
 
@@ -45,11 +44,11 @@ def query_params_to_budget(request_object: Request) -> dict:
         print('Could not load any JSON from query_params_to_budget')
     return result
 
-SCHEMA = Schema({
-    Required('savingsGoal'): All(int, Range(min=1)),
-    Required('months'): All(int, Range(min=1)),
-    Required('spendingMoney'): int,
-    Required('toSave'): All(int, Range(min=1))
+BUDGET_DATA_SCHEMA = Schema({
+    Required('goal'): All(int, Range(min=1)),
+    Required('timeUntilGoal'): All(int, Range(min=1)),
+    Required('monthlySpending'): int,
+    Required('monthlySaving'): All(int, Range(min=1))
 })
 
 class Budget(Document):
