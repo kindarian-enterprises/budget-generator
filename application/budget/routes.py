@@ -4,7 +4,7 @@ should be taken depending on request type.'''
 
 from http import HTTPStatus
 from flask import request, jsonify, after_this_request
-from application.budget.controller import BadRequestException
+from application.budget.controller import InvalidPayloadError
 import application.budget.controller as controller
 from . import budget_bp
 
@@ -23,8 +23,10 @@ def budget_no_id() -> str:
     try:
         result = getattr(controller, f'{method}_budget_no_id')(request)
         return_value = jsonify(result)
-    except BadRequestException as err:
+    except InvalidPayloadError as err:
         return jsonify(str(err), HTTPStatus.BAD_REQUEST)
+    except Exception as err:
+        return jsonify(str(err), HTTPStatus.INTERNAL_SERVER_ERROR)
 
     return return_value
 
@@ -37,7 +39,9 @@ def budget_with_id(budget_id) -> str:
     try:
         result = getattr(controller, f'{method}_budget_with_id')(budget_id, request)
         return_value = jsonify(result)
-    except BadRequestException as err:
+    except InvalidPayloadError as err:
         return jsonify(str(err), HTTPStatus.BAD_REQUEST)
-    
+    except Exception as err:
+        return jsonify(str(err), HTTPStatus.INTERNAL_SERVER_ERROR)
+
     return return_value

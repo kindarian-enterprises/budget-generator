@@ -4,7 +4,7 @@ from application.budget.model import Budget, query_params_to_budget, CREATE_BUDG
 from application.budget.common.pipelines import make_pagination_pipeline
 from mongoengine import DoesNotExist, OperationError
 
-class BadRequestException(Exception):
+class InvalidPayloadError(Exception):
     '''
     Exception raised when a schema test fails.
 
@@ -33,7 +33,7 @@ def put_budget_no_id(request_object: Request) -> str:
     try:
         CREATE_BUDGET_SCHEMA(budget_data)
     except (MultipleInvalid, Invalid):
-        raise BadRequestException("Budget data did not conform to schema.")
+        raise InvalidPayloadError("Budget data did not conform to schema.")
     budget_object = Budget(**budget_data).save()
 
     return budget_object.to_json()
@@ -47,7 +47,7 @@ def get_budget_with_id(budget_id: str, request_object: Request) -> list:
     try:
         FILTER_BUDGET_SCHEMA(filters)
     except (MultipleInvalid, Invalid):
-        raise BadRequestException("Budet data did not conform to schema.")
+        raise InvalidPayloadError("Budet data did not conform to schema.")
 
     results = Budget.objects(**filters)
     return [x.to_json() for x in results]
@@ -58,7 +58,7 @@ def delete_budget_with_id(budget_id: str, request_object: Request) -> str:
     try:
         budget = Budget.objects.get(id=budget_id)
     except DoesNotExist:
-        raise BadRequestException("Budget ID does not exist.")
+        raise InvalidPayloadError("Budget ID does not exist.")
     budget.delete()
     return f'Budget {budget_id} successfully deleted'
 
@@ -70,18 +70,14 @@ def post_budget_with_id(budget_id: str, request_object: Request) -> str:
 
     try:
         FILTER_BUDGET_SCHEMA(update)
-    except (MultipleInvalid, Invalid):
-        raise BadRequestException("Budget data did not conform to schema.")
-
-    try:
         budget = Budget.objects.get(id=budget_id)
-    except DoesNotExist:
-        raise BadRequestException('No budget with that ID found.')
-
-    try:
         budget.modify(**update)
+    except (MultipleInvalid, Invalid):
+        raise InvalidPayloadError("Budget data did not conform to schema.")
     except OperationError as err:
-        raise BadRequestException(str(err))
+        raise InvalidPayloadError(str(err))
+    except DoesNotExist:
+        raise InvalidPayloadError('No budget with that ID found.')
 
     budget.save()
     return budget.to_json()
