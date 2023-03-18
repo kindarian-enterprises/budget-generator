@@ -1,14 +1,12 @@
 name: Pytest
 
 on:
-
   # Triggers the workflow on pull requests on master branch
 
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
   workflow_dispatch:
-
 
 jobs:
   test:
