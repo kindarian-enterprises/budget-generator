@@ -21,6 +21,7 @@ jobs:
         run: |
           sudo apt-get install python3
           pip install -r $GITHUB_WORKSPACE/requirements.txt
+          pip install pytest-cov
 
       - name: Run pytest
-        run: pytest
+        run: pytest --cov-report xml:$GITHUB_WORKSPACE/coverage.xml
