@@ -1,6 +1,6 @@
 import pytest
 from mongoengine import connect
-from datetime import datetime
+from datetime import datetime, timezone
 
 @pytest.fixture()
 def mock_get_db_connection(mocker):
@@ -338,10 +338,17 @@ SAVED_BUDGETS_PAGE_TEST_DATA = '''<!DOCTYPE html>
   </body>
 </html>'''
 
-DASHBOARD_BUDGET_INPUT_DATA = [
-{'goal': 9000, 'date': datetime.strftime(datetime.now(), '%Y-%m-%d')},
-{'goal': 7000, 'date': datetime.strftime(datetime.now(), '%Y-%m-%d')}
-]
+def make_dashboard_budget_input_data() -> list:
+    '''
+    Small helpter function that creates test data with the current data.
+
+    Returns:
+      list: A list containing to dictionaries of sample budget data.
+    '''
+    return [
+    {'goal': 9000, 'date': datetime.strftime(datetime.now(timezone.utc), '%Y-%m-%d')},
+    {'goal': 7000, 'date': datetime.strftime(datetime.now(timezone.utc), '%Y-%m-%d')}
+    ]
 
 DASHBOARD_PAGE_TEST_DATA = f'''<!DOCTYPE html>
 <html>
@@ -421,7 +428,7 @@ DASHBOARD_PAGE_TEST_DATA = f'''<!DOCTYPE html>
 
 <script type="text/javascript" src="/static/dash.js?fffa6eb3"></script>
 
-<script type="text/javascript">displayRecentBudgets({DASHBOARD_BUDGET_INPUT_DATA})</script>
+<script type="text/javascript">displayRecentBudgets({make_dashboard_budget_input_data()})</script>
 </div>
   </body>
 </html>'''
