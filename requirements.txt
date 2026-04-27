@@ -27,7 +27,7 @@ pydyf==0.5.0
 pymongo>=3.10, <4.0
 pyparsing==3.0.9
 pyphen==0.13.2
-pytest==7.1.2
+pytest==9.0.3
 pytest-mock==3.10.0
 requests==2.28.2
 sentinels==1.0.0
