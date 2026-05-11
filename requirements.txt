@@ -34,7 +34,7 @@ sentinels==1.0.0
 six==1.16.0
 tinycss2==1.2.1
 tomli==2.0.1
-urllib3==1.26.14
+urllib3==2.7.0
 uwsgidecorators==1.1.0
 weasyprint==52.5
 webassets==2.0
